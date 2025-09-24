@@ -1,15 +1,14 @@
 {
   "expo": {
-    "name": "Restaurant Template",
-    "slug": "RestaurantTemplateFrontend",
-    "scheme": "yourapp",
+    "name": "Nic_Explore_HN",
+    "slug": "Nic_Explore_HN",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/LogoRestaurant.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./src/assets/images/LogoRestaurant.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,15 +17,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./src/assets/images/favicon.png",
-      "bundler": "metro"
-    },
-    "plugins": ["expo-font", "expo-router"]
+      "favicon": "./assets/favicon.png"
+    }
   }
 }
