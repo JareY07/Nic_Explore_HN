@@ -1,38 +1,32 @@
 import { Platform, ScrollView, Text, View, Image, ImageBackground, Keyboard } from 'react-native';
-import MyButton from '@/components/ui/myButton/MyButton';
 import MyInput from '@/components/ui/myInput/MyInput';
+import MyButton from '@/components/ui/myButton/MyButton';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
 
 type FormData = {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
   password: string;
   confirmPassword: string;
 };
 
-export default function ChangePasswordScreen() {
+export default function SignUpStepTwoScreen() {
   const router = useRouter();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const { control, handleSubmit, watch, setError, clearErrors } = useForm<FormData>({
-    defaultValues: { password: '', confirmPassword: '' },
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () =>
-      setKeyboardVisible(true),
-    );
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardVisible(false),
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
   useEffect(() => {
     if (confirmPassword && password !== confirmPassword) {
@@ -44,6 +38,17 @@ export default function ChangePasswordScreen() {
       clearErrors('confirmPassword');
     }
   }, [password, confirmPassword, setError, clearErrors]);
+
+  const emailRules = useMemo(
+    () => ({
+      required: 'This field is required.',
+      pattern: {
+        value: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+        message: 'Invalid Email Address',
+      },
+    }),
+    [],
+  );
 
   const passwordRules = useMemo(
     () => ({
@@ -69,11 +74,23 @@ export default function ChangePasswordScreen() {
     [],
   );
 
-  const handleFormSubmit = handleSubmit((data: FormData) => {
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () =>
+      setKeyboardVisible(true),
+    );
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardVisible(false),
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const onSubmit = (data: FormData) => {
     console.log('Form data:', data);
-    console.log('cambiando contraseña...');
-    router.replace('/login');
-  });
+  };
 
   return (
     <ImageBackground
@@ -90,58 +107,74 @@ export default function ChangePasswordScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
         {/* Logo */}
-        {!isKeyboardVisible && (
-          <Image
-            resizeMode="contain"
-            className="w-full h-[80px] mb-8"
-            source={require('@/assets/images/miniLogo.png')}
-          />
-        )}
+        <Image
+          resizeMode="contain"
+          className="w-full h-[80px] mb-4"
+          source={require('@/assets/images/miniLogo.png')}
+        />
 
         <View
-          className={`bg-white w-full rounded-t-[40px] px-8 pt-10 pb-8 ${isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[55%]'}`}>
+          className={`bg-white w-full rounded-t-[40px] px-8 pt-10 pb-8 ${isKeyboardVisible ? 'min-h-[85%]' : 'min-h-[70%]'}`}>
           {/* Título */}
           <Text className="text-3xl font-bold text-center text-neutral-800 mb-8">
-            Enter your new password
+            Create Account
           </Text>
 
-          {/* Formulario */}
-          <View>
+          {/* Formulario de registro */}
+          <View className="space-y-4">
+            <MyInput
+              control={control}
+              name="email"
+              rules={emailRules}
+              type="email"
+              placeholder="your@email.com"
+              label="Email"
+              trimSpaces={true}
+            />
+
             <MyInput
               control={control}
               name="password"
               rules={passwordRules}
               type="password"
-              placeholder="Your new password"
-              label="New Password"
+              placeholder="Your password"
+              label="Password"
             />
 
-            {/* Campo de confirmación de contraseña */}
             <MyInput
               control={control}
               name="confirmPassword"
               rules={repeatPasswordRules}
               type="password"
-              placeholder="Confirm your password"
+              placeholder="Repeat password"
               label="Confirm Password"
-            />
-
-            {/* Botón para cambiar contraseña */}
-            <MyButton
-              onPress={handleFormSubmit}
-              variant="primary"
-              title="Change Password"
-              size="md"
-              className="my-6"
-              accessibilityLabel="Change password"
             />
           </View>
 
-          {/* Texto informativo opcional */}
-          <View className="flex-row justify-center items-center mt-4">
-            <Text className="text-neutral-600 text-base text-center">
-              Make sure your new password is strong and secure
-            </Text>
+          {/* Botón de Sign Up */}
+          <MyButton
+            onPress={handleSubmit((data) => {
+              onSubmit(data);
+              router.push('/codeSend');
+            })}
+            title="Sign Up"
+            variant="primary"
+            size="md"
+            className="my-6"
+            accessibilityLabel="Sign Up"
+          />
+
+          {/* Botón para ir a Login */}
+          <View className="flex-row justify-center items-center">
+            <Text className="text-neutral-600 text-base">Already have an account?</Text>
+            <MyButton
+              onPress={() => router.push('/login')}
+              title="Sign In"
+              variant="text"
+              size="sm"
+              className="p-0 ml-1"
+              textClassName="text-primary-800 font-semibold"
+            />
           </View>
         </View>
       </ScrollView>

@@ -1,86 +1,134 @@
-import { TextInput, Pressable } from 'react-native';
-import useInputAnimation from '@/components/hooks/useInputAnimation';
-import usePasswordVisibility from '@/features/auth/hooks/usePasswordVisibility';
+import { TextInput, Pressable, View, Text } from 'react-native';
+import { memo, useState, useCallback } from 'react';
 import { EyeOnIcon, EyeOffIcon } from '@/components/icons/icons';
-import Animated from 'react-native-reanimated';
 import { colors } from '@/theme/colors';
 import CodeInput from '@/features/auth/components/codeInput';
 import { InputFieldProps } from '@/types/InputProps';
 
-const InputField: React.FC<InputFieldProps> = ({
-  value,
-  onChange,
-  onBlur,
-  type,
-  placeholder,
-  trimSpaces,
-  label,
-  error,
-}) => {
-  const { passwordVisibility, rightIcon, toggleVisibility } = usePasswordVisibility();
-  const { animatedStyle, handleFocus, handleBlur } = useInputAnimation();
+const InputField: React.FC<InputFieldProps> = memo(
+  ({ value, onChange, onBlur, type, placeholder, trimSpaces, label, error }) => {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
-  const handleBlurWithTrim = () => {
-    onBlur();
-    if (type !== 'code') {
-      handleBlur();
-    }
-    if (trimSpaces && value && type !== 'code') {
-      onChange(value.trim());
-    }
-  };
+    // Usar useCallback para evitar recrear funciones
+    const handleBlurWithTrim = useCallback(() => {
+      onBlur();
+      setIsFocused(false);
+      if (trimSpaces && value && type !== 'code') {
+        onChange(value.trim());
+      }
+    }, [onBlur, trimSpaces, value, type, onChange]);
 
-  const handleFocusWithAnimation = () => {
-    // Solo llamar handleFocus para tipos que no sean 'code'
-    if (type !== 'code') {
-      handleFocus();
-    }
-  };
+    const handleFocus = useCallback(() => {
+      setIsFocused(true);
+    }, []);
 
-  if (type === 'code') {
-    return (
-      <CodeInput
-        value={value}
-        onChange={onChange}
-        onBlur={handleBlurWithTrim}
-        error={error}
-        label={label}
-      />
-    );
-  }
-  return (
-    <Animated.View
-      style={[animatedStyle]}
-      className="flex-row items-center mb-2 p-2 rounded-[15px] bg-neutral-white shadow-sm border border-neutral-100">
-      <TextInput
-        value={value ? String(value) : ''}
-        onChangeText={onChange}
-        onBlur={handleBlurWithTrim}
-        onFocus={handleFocusWithAnimation}
-        placeholder={placeholder}
-        secureTextEntry={type === 'password' ? passwordVisibility : false}
-        keyboardType={type === 'email' ? 'email-address' : 'default'}
-        className="flex-1 text-black"
-        accessibilityLabel={label}
-        accessibilityHint={`Ingresa tu ${label?.toLowerCase()}`}
-        autoCapitalize={type === 'email' ? 'none' : 'sentences'}
-      />
+    const togglePasswordVisibility = useCallback(() => {
+      setPasswordVisible((prev) => !prev);
+    }, []);
 
-      {type === 'password' && (
-        <Pressable
-          onPress={toggleVisibility}
-          accessibilityLabel="Alternar visibilidad de contraseña"
-          className="p-2"
-          accessibilityHint="Presiona para mostrar u ocultar la contraseña">
-          {rightIcon === 'eye' ? (
-            <EyeOnIcon color={colors.primary[400]} />
-          ) : (
-            <EyeOffIcon color={colors.primary[400]} />
+    // Memoizar el componente para evitar re-renders innecesarios
+    const inputComponent = useCallback(() => {
+      if (type === 'code') {
+        return (
+          <CodeInput
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            error={error}
+            label={label}
+          />
+        );
+      }
+
+      return (
+        <View
+          className="flex-row items-center rounded-2xl bg-white border-2
+          ${error
+            ? 'border-status-error'
+            : isFocused
+              ? 'border-primary-800 shadow-lg'
+              : 'border-neutral-100 shadow-sm'
+          }">
+          <TextInput
+            value={value ? String(value) : ''}
+            onChangeText={onChange}
+            onBlur={handleBlurWithTrim}
+            onFocus={handleFocus}
+            placeholder={placeholder}
+            placeholderTextColor="#9CA3AF"
+            secureTextEntry={type === 'password' ? !passwordVisible : false}
+            keyboardType={type === 'email' ? 'email-address' : 'default'}
+            className="flex-1 py-4 px-5 text-neutral-800 text-base font-medium"
+            accessibilityLabel={label}
+            accessibilityHint={`Ingresa tu ${label?.toLowerCase()}`}
+            autoCapitalize={type === 'email' ? 'none' : 'sentences'}
+            // IMPORTANTE: Agregar estas props para manejar el foco
+            blurOnSubmit={false}
+            returnKeyType="next"
+          />
+
+          {type === 'password' && (
+            <Pressable
+              onPress={togglePasswordVisibility}
+              accessibilityLabel="Alternar visibilidad de contraseña"
+              className="pr-4"
+              accessibilityHint="Presiona para mostrar u ocultar la contraseña">
+              {passwordVisible ? (
+                <EyeOnIcon color={error ? colors.status.error : colors.primary[500]} size={20} />
+              ) : (
+                <EyeOffIcon color={error ? colors.status.error : colors.primary[500]} size={20} />
+              )}
+            </Pressable>
           )}
-        </Pressable>
-      )}
-    </Animated.View>
-  );
-};
+        </View>
+      );
+    }, [
+      value,
+      error,
+      isFocused,
+      passwordVisible,
+      type,
+      label,
+      placeholder,
+      handleBlurWithTrim,
+      handleFocus,
+      onBlur,
+      onChange,
+      togglePasswordVisibility,
+    ]);
 
+    return (
+      <View className="mb-4">
+        {/* Label estático siempre visible */}
+        {label && (
+          <Text
+            className={`
+              text-sm font-semibold mb-2 ml-1
+              ${error ? 'text-status-error' : 'text-neutral-700'}
+            `}>
+            {label}
+          </Text>
+        )}
+
+        {inputComponent()}
+
+        {/* Mensaje de error */}
+        {error && <Text className="text-status-error text-sm mt-1 ml-1">{error.message}</Text>}
+      </View>
+    );
+  },
+  // Custom comparison function para memo - EVITA re-renders innecesarios
+  (prevProps, nextProps) => {
+    return (
+      prevProps.value === nextProps.value &&
+      prevProps.error?.message === nextProps.error?.message &&
+      prevProps.type === nextProps.type &&
+      prevProps.label === nextProps.label &&
+      prevProps.placeholder === nextProps.placeholder
+    );
+  },
+);
+
+InputField.displayName = 'InputField';
 export default InputField;

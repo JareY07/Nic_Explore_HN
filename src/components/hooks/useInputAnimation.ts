@@ -1,28 +1,35 @@
-import { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { colors } from '@/theme/colors';
+// hooks/useInputAnimation.ts
+import { useState } from 'react';
 
 const useInputAnimation = () => {
-  const borderWidth = useSharedValue(1);
-  const borderColor = useSharedValue(
-    typeof colors.neutral[100] === 'string' ? colors.neutral[100] : colors.primary[400],
-  );
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    borderWidth: borderWidth.value,
-    borderColor: borderColor.value,
-  }));
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
-    borderWidth.value = withTiming(2, { duration: 200 });
-    borderColor.value = withTiming(colors.primary[400], { duration: 200 });
+    setIsFocused(true);
   };
 
   const handleBlur = () => {
-    borderWidth.value = withTiming(1, { duration: 200 });
-    borderColor.value = withTiming(colors.neutral[100], { duration: 200 });
+    setIsFocused(false);
   };
 
-  return { animatedStyle, handleFocus, handleBlur };
+  // Retornar clases condicionales - ACTUALIZADO CON VERDE CLARO
+  const getBorderClass = (error?: any) => {
+    if (error) return 'border-status-error';
+    if (isFocused) return 'border-primary-300 border-2 shadow-lg'; // Verde claro + sombra
+    return 'border-neutral-200 border-2 shadow-sm';
+  };
+
+  const getScaleClass = () => {
+    return isFocused ? '' : ''; // Puedes dejar esto vacío o usar transform nativo si es compatible
+  };
+
+  return {
+    getBorderClass,
+    getScaleClass,
+    handleFocus,
+    handleBlur,
+    isFocused,
+  };
 };
 
 export default useInputAnimation;

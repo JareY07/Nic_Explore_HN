@@ -14,11 +14,14 @@ export default function drawerLayout() {
           drawerHideStatusBarOnOpen: true,
           drawerActiveBackgroundColor: colors.primary[500],
           drawerActiveTintColor: colors.primary[100],
+          drawerPosition: 'right',
+          swipeEdgeWidth: 50,
+          headerShown: false,
         }}>
         <Drawer.Screen
           name="(tabs)"
           options={{
-            title: 'Feed',
+            title: 'Home',
             headerShown: false,
             drawerIcon: ({ size, color }) => <HomeIcon size={size} color={color} />,
           }}

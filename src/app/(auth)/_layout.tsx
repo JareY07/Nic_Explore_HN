@@ -22,6 +22,12 @@ export default function AuthLayout() {
         }}
       />
       <Stack.Screen
+        name="signUpStepTwo"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="emailSend"
         options={{
           headerShown: false,

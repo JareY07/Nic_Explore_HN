@@ -6,11 +6,16 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#e1eaf7',
-          100: '#b3c9e8',
-          400: '#4d8df0',
-          500: '#2a5db0',
-          700: '#1a3d7a',
+          50: '#f0f9f8', // Muy claro, basado en #04423D
+          100: '#d1eeea', // Claro
+          200: '#a3ddd5',
+          300: '#75cbc0',
+          400: '#47baab', // Intermedio
+          500: '#367356', // Tu color principal
+          600: '#2a5d45', // Más oscuro
+          700: '#1e4734', // Oscuro
+          800: '#04423D', // Tu color oscuro
+          900: '#03332a', // Muy oscuro
         },
         status: {
           success: '#40c057',
@@ -63,6 +68,21 @@ module.exports = {
         tight: '1.2',
         normal: '1.5',
         loose: '1.8',
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '8px',
+      },
+      transitionProperty: {
+        all: 'all',
+      },
+      transitionDuration: {
+        200: '200ms',
+      },
+      scale: {
+        102: '1.02',
+        105: '1.05',
       },
     },
     plugins: [],
