@@ -23,54 +23,58 @@ const MyButton: React.FC<ButtonProps> = ({
   const getVariantStyle = (): string => {
     switch (variant) {
       case 'primary':
-        return 'bg-primary-500';
+        return 'bg-primary-800'; // Cambiado a verde oscuro (#04423D)
       case 'secondary':
-        return 'bg-status-success';
+        return 'bg-primary-500'; // Verde principal (#367356)
       case 'outline':
-        return 'bg-transparent border border-primary-500';
+        return 'bg-transparent border-2 border-primary-800';
       case 'text':
         return 'bg-transparent';
-      case 'glass': // Nueva variante glass
-        return 'bg-white/10 border border-white/20';
+      case 'text-gray':
+        return 'bg-transparent';
+      case 'glass':
+        return 'bg-white/15 border border-white/25';
       default:
-        return 'bg-primary-500';
+        return 'bg-primary-800';
     }
   };
 
   const getSizeStyle = (): string => {
     switch (size) {
       case 'sm':
-        return 'py-2 px-4';
+        return 'py-2.5 px-5 rounded-xl';
       case 'md':
-        return 'py-3 px-6';
+        return 'py-3.5 px-7 rounded-2xl';
       case 'lg':
-        return 'py-4 px-8';
+        return 'py-4.5 px-9 rounded-3xl';
       default:
-        return 'py-3 px-6';
+        return 'py-3.5 px-7 rounded-2xl';
     }
   };
 
   const getTextVariantStyle = (): string => {
     switch (variant) {
       case 'primary':
-        return 'text-neutral-100';
+        return 'text-white font-bold';
       case 'secondary':
-        return 'text-neutral-white';
+        return 'text-white font-semibold';
       case 'outline':
-        return 'text-primary-500';
+        return 'text-primary-800 font-semibold';
       case 'text':
-        return 'text-white';
+        return 'text-white font-medium';
+      case 'text-gray':
+        return 'text-neutral-400 font-medium';
       case 'glass':
-        return 'text-white font-extrabold';
+        return 'text-white font-bold';
       default:
-        return 'text-neutral-100';
+        return 'text-white font-bold';
     }
   };
 
   const getTextSizeStyle = (): string => {
     switch (size) {
       case 'sm':
-        return 'text-md';
+        return 'text-base';
       case 'md':
         return 'text-lg';
       case 'lg':
@@ -85,11 +89,33 @@ const MyButton: React.FC<ButtonProps> = ({
       return `
         backdrop-blur-2xl
         shadow-2xl
-        shadow-black/30
-        elevation-8
+        shadow-black/40
+        elevation-10
       `;
     }
     return '';
+  };
+
+  // Efectos de hover/press para cada variante
+  const getPressEffectStyle = (): string => {
+    if (disabled) return '';
+
+    switch (variant) {
+      case 'primary':
+        return 'active:bg-primary-900 active:scale-95';
+      case 'secondary':
+        return 'active:bg-primary-600 active:scale-95';
+      case 'outline':
+        return 'active:bg-primary-50 active:scale-95';
+      case 'text':
+        return 'active:bg-white/10 active:scale-95';
+      case 'text-gray':
+        return 'active:bg-neutral-100 active:scale-95';
+      case 'glass':
+        return 'active:bg-white/20 active:scale-95';
+      default:
+        return 'active:scale-95';
+    }
   };
 
   return (
@@ -98,10 +124,12 @@ const MyButton: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       accessibilityLabel={accessibilityLabel || title}
       className={`
-        flex-row items-center justify-center rounded-2xl
+        flex-row items-center justify-center 
+        transition-all duration-200
         ${getVariantStyle()} 
         ${getSizeStyle()}
         ${getGlassEffectStyle()}
+        ${getPressEffectStyle()}
         ${disabled ? 'opacity-60' : 'opacity-100'}
         ${className}
       `}
@@ -110,40 +138,42 @@ const MyButton: React.FC<ButtonProps> = ({
         variant === 'glass' && !disabled && !loading
           ? {
               shadowColor: '#000',
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.25,
-              shadowRadius: 8,
+              shadowOffset: { width: 0, height: 6 },
+              shadowOpacity: 0.3,
+              shadowRadius: 12,
             }
           : {},
       ]}>
       {loading ? (
         <ActivityIndicator
           color={
-            variant === 'glass'
+            variant === 'glass' ||
+            variant === 'text' ||
+            variant === 'primary' ||
+            variant === 'secondary'
               ? colors.neutral.white
-              : variant === 'primary' || variant === 'secondary'
-                ? colors.neutral.white
-                : colors.primary[500]
+              : variant === 'text-gray'
+                ? colors.neutral[400]
+                : colors.primary[700]
           }
           size="small"
         />
       ) : (
         <>
-          {icon && <View className="mr-2">{icon}</View>}
+          {icon && <View className="mr-2.5">{icon}</View>}
           <Text
             className={`
-              font-semibold text-center
+              text-center
               ${getTextVariantStyle()}
               ${getTextSizeStyle()}
-              ${variant === 'glass' ? 'font-medium' : 'font-semibold'}
               ${textClassName}
             `}
             style={
               variant === 'glass'
                 ? {
-                    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+                    textShadowColor: 'rgba(0, 0, 0, 0.4)',
                     textShadowOffset: { width: 0, height: 1 },
-                    textShadowRadius: 2,
+                    textShadowRadius: 3,
                   }
                 : {}
             }>

@@ -65,6 +65,7 @@ Después de ejecutar npx expo start:
     Web: Presiona w para abrir en el navegador
 
 🏗️ Estructura del Proyecto
+text
 
 src/
 ├── app/ # Configuración principal de la app y enrutado

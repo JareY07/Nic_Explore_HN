@@ -7,23 +7,14 @@ export const useAuthStore = create(
   persist<UserState>(
     (set) => ({
       isLoggedIn: false,
-      logIn: () =>
-        set(() => {
-          return { isLoggedIn: true };
-        }),
-      logOut: () =>
-        set(() => {
-          return { isLoggedIn: false };
-        }),
-      shouldCreateAccount: false,
-      noAccountCreated: () =>
-        set(() => {
-          return { shouldCreateAccount: true };
-        }),
-      accountCreated: () =>
-        set(() => {
-          return { shouldCreateAccount: false };
-        }),
+      authFlow: null,
+      tempEmail: null,
+      logIn: () => set({ isLoggedIn: true, authFlow: null }),
+      logOut: () => set({ isLoggedIn: false, authFlow: null, tempEmail: null }),
+      setAuthFlow: (flow) => set({ authFlow: flow }),
+      setTempEmail: (email) => set({ tempEmail: email }),
+      clearTempEmail: () => set({ tempEmail: null }),
+      resetAuthFlow: () => set({ authFlow: null, tempEmail: null }),
     }),
     {
       name: 'auth-store',

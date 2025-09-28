@@ -1,26 +1,16 @@
-import InputContainer from '@/components/ui/myInput/InputContainer';
+// components/ui/myInput/MyInput.tsx
 import InputField from '@/components/ui/myInput/inputField';
 import { InputProps } from '@/types/InputProps';
 import { Controller } from 'react-hook-form';
-import React from 'react';
-
-const MyInput: React.FC<InputProps> = ({
-  control,
-  name,
-  rules = {},
-  type = 'text',
-  placeholder,
-  errors = {},
-  label,
-  trimSpaces = false,
-}) => {
-  return (
-    <Controller
-      control={control}
-      name={name}
-      rules={rules}
-      render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-        <InputContainer label={label} error={error}>
+import React, { memo } from 'react';
+const MyInput: React.FC<InputProps> = memo(
+  ({ control, name, rules = {}, type = 'text', placeholder, label, trimSpaces = false }) => {
+    return (
+      <Controller
+        control={control}
+        name={name}
+        rules={rules}
+        render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
           <InputField
             value={value}
             onChange={onChange}
@@ -29,12 +19,13 @@ const MyInput: React.FC<InputProps> = ({
             placeholder={placeholder}
             trimSpaces={trimSpaces}
             label={label}
-            error={errors}
+            error={error}
           />
-        </InputContainer>
-      )}
-    />
-  );
-};
+        )}
+      />
+    );
+  },
+);
 
+MyInput.displayName = 'MyInput';
 export default MyInput;

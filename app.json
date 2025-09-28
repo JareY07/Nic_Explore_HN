@@ -5,11 +5,11 @@
     "scheme": "yourapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/favicon.png",
+    "icon": "./src/assets/images/LogoApp.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./src/assets/images/LogoRestaurant.png",
+      "image": "./src/assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

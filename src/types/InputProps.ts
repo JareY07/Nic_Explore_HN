@@ -1,4 +1,4 @@
-import { Control, FieldErrors } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 
 export interface InputProps {
   control: Control<any>;
@@ -6,7 +6,6 @@ export interface InputProps {
   rules?: object;
   type?: 'text' | 'password' | 'email' | 'code';
   placeholder?: string;
-  errors: FieldErrors;
   label: string;
   trimSpaces?: boolean;
   className?: string;

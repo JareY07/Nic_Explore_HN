@@ -1,66 +1,53 @@
-import {
-  Platform,
-  ScrollView,
-  Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import { View, Image, ImageBackground } from 'react-native';
 import MyButton from '@/components/ui/myButton/MyButton';
 import { useRouter } from 'expo-router';
-import { colors } from '@/theme/colors';
 import '../../../../global.css';
+import { useAuthStore } from '../store/useAuth';
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const { setAuthFlow, resetAuthFlow } = useAuthStore();
 
+  const handleLogin = () => {
+    resetAuthFlow();
+    router.push('/login');
+  };
+
+  const handleCreateAccount = () => {
+    resetAuthFlow();
+    setAuthFlow('createAccount');
+    router.push('/signUp');
+  };
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      style={{ flex: 1, backgroundColor: colors.neutral.white }}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ImageBackground
-          source={require('@/assets/images/BeachBackground.jpg')}
-          className="flex-1"
-          resizeMode="cover">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              justifyContent: 'center',
-              paddingBottom: Platform.OS === 'ios' ? 20 : 0,
-            }}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}>
-            <Image
-              resizeMode="contain"
-              className="h-[170px] w-[300px] mt-[300px] mb-[100px]"
-              source={require('@/assets/images/PresentationApp.png')}
-            />
-            {/* Botón de Iniciar sesión */}
-            <MyButton
-              onPress={() => router.push('/login')}
-              variant="glass"
-              title="Sign In"
-              size="md"
-              className="mx-10 mb-4"
-              accessibilityLabel="Iniciar sesión"
-            />
+    <ImageBackground
+      source={require('@/assets/images/BeachBackground.jpg')}
+      className="flex-1"
+      resizeMode="cover">
+      <View>
+        <Image
+          resizeMode="contain"
+          className="h-[170px] w-[300px] mt-[380px] mb-[100px]"
+          source={require('@/assets/images/PresentationApp.png')}
+        />
+        {/* Botón de Iniciar sesión */}
+        <MyButton
+          onPress={handleLogin}
+          variant="glass"
+          title="Sign In"
+          size="md"
+          className="mx-10 mb-4"
+          accessibilityLabel="Sign In"
+        />
 
-            {/* Botón de crear cuenta */}
-            <MyButton
-              onPress={() => {
-                router.push('/signUp');
-              }}
-              title="Create an account"
-              variant="text"
-              size="sm"
-              className="mx-6"
-            />
-          </ScrollView>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        {/* Botón de crear cuenta */}
+        <MyButton
+          onPress={handleCreateAccount}
+          title="Create an account"
+          variant="text"
+          size="sm"
+          className="mx-6"
+        />
+      </View>
+    </ImageBackground>
   );
 }
