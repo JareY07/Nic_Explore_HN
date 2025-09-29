@@ -2,6 +2,7 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 interface IconProps {
   color?: string;
@@ -13,6 +14,14 @@ export const HomeIcon = ({ color, size = 24 }: IconProps) => (
 
 export const LikedIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="heart" size={size} color={color} />
+);
+
+export const HeartFilledIcon = ({ color, size = 24 }: IconProps) => (
+  <FontAwesome name="heart" size={size} color={color} />
+);
+
+export const HeartEmptyIcon = ({ color, size = 24 }: IconProps) => (
+  <FontAwesome name="heart-o" size={size} color={color} />
 );
 
 export const OrderIcon = ({ color, size = 24 }: IconProps) => (
