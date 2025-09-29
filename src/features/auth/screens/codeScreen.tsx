@@ -127,7 +127,7 @@ export default function CodeScreen() {
           className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
             isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
           } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
-          {/* Título - ACTUALIZADO PARA DARK MODE */}
+          {/* Título*/}
           <Text
             className={`text-3xl font-bold text-center mb-8 ${
               theme === 'dark' ? 'text-white' : 'text-neutral-800'

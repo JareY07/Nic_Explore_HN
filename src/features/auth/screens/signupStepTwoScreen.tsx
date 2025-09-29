@@ -110,7 +110,6 @@ export default function SignUpStepTwoScreen() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsLoading(true);
-
       // Combina los datos de ambas pantallas
       const completeUserData = {
         ...signUpData, // Datos de la primera pantalla
@@ -121,7 +120,7 @@ export default function SignUpStepTwoScreen() {
       console.log('Datos completos para enviar a la API:', completeUserData);
 
       // Aquí haces la llamada a tu API
-      const response = await api.post('/users/create', completeUserData);
+      const response = await api.post('/create', completeUserData);
       console.log('Registro exitoso:', response.data);
 
       clearSignUpData();
