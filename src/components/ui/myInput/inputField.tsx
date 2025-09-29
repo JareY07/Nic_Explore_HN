@@ -1,16 +1,18 @@
+// components/ui/myInput/inputField.tsx
 import { TextInput, Pressable, View, Text } from 'react-native';
 import { memo, useState, useCallback } from 'react';
 import { EyeOnIcon, EyeOffIcon } from '@/components/icons/icons';
 import { colors } from '@/theme/colors';
 import CodeInput from '@/features/auth/components/codeInput';
 import { InputFieldProps } from '@/types/InputProps';
+import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
 
 const InputField: React.FC<InputFieldProps> = memo(
   ({ value, onChange, onBlur, type, placeholder, trimSpaces, label, error }) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const { theme } = useAppStore(); // Obtener el tema actual
 
-    // Usar useCallback para evitar recrear funciones
     const handleBlurWithTrim = useCallback(() => {
       onBlur();
       setIsFocused(false);
@@ -27,7 +29,33 @@ const InputField: React.FC<InputFieldProps> = memo(
       setPasswordVisible((prev) => !prev);
     }, []);
 
-    // Memoizar el componente para evitar re-renders innecesarios
+    // Determinar colores basados en el tema
+    const getBorderColor = useCallback(() => {
+      if (error) return 'border-status-error';
+      if (isFocused) {
+        return theme === 'dark' ? 'border-primary-400' : 'border-primary-800';
+      }
+      return theme === 'dark' ? 'border-neutral-700' : 'border-neutral-100';
+    }, [error, isFocused, theme]);
+
+    const getBackgroundColor = useCallback(() => {
+      return theme === 'dark' ? 'bg-neutral-800' : 'bg-white';
+    }, [theme]);
+
+    const getTextColor = useCallback(() => {
+      return theme === 'dark' ? 'text-white' : 'text-neutral-800';
+    }, [theme]);
+
+    const getLabelColor = () => {
+      return error
+        ? 'text-status-error'
+        : theme === 'dark'
+          ? 'text-neutral-200'
+          : 'text-neutral-700';
+    };
+
+    const getPlaceholderColor = theme === 'dark' ? '#9CA3AF' : '#9CA3AF';
+
     const inputComponent = useCallback(() => {
       if (type === 'code') {
         return (
@@ -43,29 +71,25 @@ const InputField: React.FC<InputFieldProps> = memo(
 
       return (
         <View
-          className="flex-row items-center rounded-2xl bg-white border-2
-          ${error
-            ? 'border-status-error'
-            : isFocused
-              ? 'border-primary-800 shadow-lg'
-              : 'border-neutral-100 shadow-sm'
-          }">
+          className={`flex-row items-center rounded-2xl border-2 ${getBorderColor()} ${getBackgroundColor()} ${
+            isFocused ? 'shadow-lg' : 'shadow-sm'
+          }`}>
           <TextInput
             value={value ? String(value) : ''}
             onChangeText={onChange}
             onBlur={handleBlurWithTrim}
             onFocus={handleFocus}
             placeholder={placeholder}
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor={getPlaceholderColor}
             secureTextEntry={type === 'password' ? !passwordVisible : false}
             keyboardType={type === 'email' ? 'email-address' : 'default'}
-            className="flex-1 py-4 px-5 text-neutral-800 text-base font-medium"
+            className={`flex-1 py-4 px-5 text-base font-medium ${getTextColor()}`}
             accessibilityLabel={label}
             accessibilityHint={`Ingresa tu ${label?.toLowerCase()}`}
             autoCapitalize={type === 'email' ? 'none' : 'sentences'}
-            // IMPORTANTE: Agregar estas props para manejar el foco
             blurOnSubmit={false}
             returnKeyType="next"
+            selectionColor={theme === 'dark' ? colors.primary[400] : colors.primary[500]}
           />
 
           {type === 'password' && (
@@ -75,9 +99,27 @@ const InputField: React.FC<InputFieldProps> = memo(
               className="pr-4"
               accessibilityHint="Presiona para mostrar u ocultar la contraseña">
               {passwordVisible ? (
-                <EyeOnIcon color={error ? colors.status.error : colors.primary[500]} size={20} />
+                <EyeOnIcon
+                  color={
+                    error
+                      ? colors.status.error
+                      : theme === 'dark'
+                        ? colors.primary[400]
+                        : colors.primary[500]
+                  }
+                  size={20}
+                />
               ) : (
-                <EyeOffIcon color={error ? colors.status.error : colors.primary[500]} size={20} />
+                <EyeOffIcon
+                  color={
+                    error
+                      ? colors.status.error
+                      : theme === 'dark'
+                        ? colors.primary[400]
+                        : colors.primary[500]
+                  }
+                  size={20}
+                />
               )}
             </Pressable>
           )}
@@ -96,19 +138,18 @@ const InputField: React.FC<InputFieldProps> = memo(
       onBlur,
       onChange,
       togglePasswordVisibility,
+      theme,
+      getBackgroundColor,
+      getBorderColor,
+      getPlaceholderColor,
+      getTextColor,
     ]);
 
     return (
       <View className="mb-4">
         {/* Label estático siempre visible */}
         {label && (
-          <Text
-            className={`
-              text-sm font-semibold mb-2 ml-1
-              ${error ? 'text-status-error' : 'text-neutral-700'}
-            `}>
-            {label}
-          </Text>
+          <Text className={`text-sm font-semibold mb-2 ml-1 ${getLabelColor()}`}>{label}</Text>
         )}
 
         {inputComponent()}
@@ -118,7 +159,6 @@ const InputField: React.FC<InputFieldProps> = memo(
       </View>
     );
   },
-  // Custom comparison function para memo - EVITA re-renders innecesarios
   (prevProps, nextProps) => {
     return (
       prevProps.value === nextProps.value &&

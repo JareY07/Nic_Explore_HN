@@ -1,9 +1,5 @@
-import { View, Text } from 'react-native';
+import FeedScreen from '@/features/home/screens/feedScreen';
 
 export default function OrderScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Order</Text>
-    </View>
-  );
+  return <FeedScreen />;
 }

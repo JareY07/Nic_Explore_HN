@@ -17,6 +17,7 @@ import { useAuthStore } from '../store/useAuth';
 import Checkbox from '@/components/ui/myInput/MyCheckBox';
 import { useEffect, useState, useMemo } from 'react';
 import { AppleIcon, FacebookIcon, GoogleIcon, XIcon } from '@/components/icons/icons';
+import { useAppStore } from '@/app/store/useAppStore'; // Corregí la ruta
 
 type FormData = {
   email: string;
@@ -31,6 +32,12 @@ export default function LoginScreen() {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: { email: '', password: '' },
   });
+  const { theme } = useAppStore();
+
+  const backgroundImage =
+    theme === 'dark'
+      ? require('@/assets/images/GranadaBackground.jpg')
+      : require('@/assets/images/BeachBackground.jpg');
 
   const emailRules = useMemo(
     () => ({
@@ -93,10 +100,10 @@ export default function LoginScreen() {
   }, []);
 
   return (
-    <ImageBackground
-      source={require('@/assets/images/BeachBackground.jpg')}
-      className="flex-1"
-      resizeMode="cover">
+    <ImageBackground source={backgroundImage} className="flex-1" resizeMode="cover">
+      {/* Overlay para dark mode si es necesario */}
+      {theme === 'dark' && <View className="absolute inset-0 bg-black/30 z-0" />}
+
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{
@@ -114,10 +121,16 @@ export default function LoginScreen() {
             source={require('@/assets/images/miniLogo.png')}
           />
 
+          {/* Contenedor principal - ACTUALIZADO PARA DARK MODE */}
           <View
-            className={`bg-white w-full rounded-t-[40px] px-8 pt-10 pb-8 ${isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'}`}>
-            {/* Título */}
-            <Text className="text-3xl font-bold text-center text-neutral-800 mb-8">
+            className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
+              isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
+            } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
+            {/* Título - ACTUALIZADO PARA DARK MODE */}
+            <Text
+              className={`text-3xl font-bold text-center mb-8 ${
+                theme === 'dark' ? 'text-white' : 'text-neutral-800'
+              }`}>
               Welcome Back!
             </Text>
 
@@ -131,6 +144,7 @@ export default function LoginScreen() {
                 placeholder="your@email.com"
                 label="Email"
                 trimSpaces={true}
+                // El MyInput debería soportar theme automáticamente si lo configuramos
               />
 
               <MyInput
@@ -142,7 +156,7 @@ export default function LoginScreen() {
                 label="Password"
               />
 
-              {/* Checkbox y Forgot Password en misma línea */}
+              {/* Checkbox y Forgot Password - ACTUALIZADO PARA DARK MODE */}
               <View className="flex-row justify-between items-center mb-6 w-full">
                 <View className="flex-1">
                   <Checkbox
@@ -151,6 +165,7 @@ export default function LoginScreen() {
                     label="Remember me"
                     variant="primary"
                     size="md"
+                    // El Checkbox debería soportar theme automáticamente
                   />
                 </View>
 
@@ -161,7 +176,9 @@ export default function LoginScreen() {
                     variant="text-gray"
                     size="sm"
                     className="py-1"
-                    textClassName="whitespace-nowrap"
+                    textClassName={`whitespace-nowrap ${
+                      theme === 'dark' ? 'text-neutral-300' : ''
+                    }`}
                   />
                 </View>
               </View>
@@ -177,37 +194,73 @@ export default function LoginScreen() {
               />
             </View>
 
-            {/* Separador con texto "sign in with" */}
+            {/* Separador - ACTUALIZADO PARA DARK MODE */}
             <View className="flex-row items-center justify-center mb-6">
-              <View className="flex-1 h-px bg-neutral-200" />
-              <Text className="mx-4 text-neutral-500 text-sm font-medium">or sign in with</Text>
-              <View className="flex-1 h-px bg-neutral-200" />
+              <View
+                className={`flex-1 h-px ${theme === 'dark' ? 'bg-neutral-700' : 'bg-neutral-200'}`}
+              />
+              <Text
+                className={`mx-4 text-sm font-medium ${
+                  theme === 'dark' ? 'text-neutral-400' : 'text-neutral-500'
+                }`}>
+                or sign in with
+              </Text>
+              <View
+                className={`flex-1 h-px ${theme === 'dark' ? 'bg-neutral-700' : 'bg-neutral-200'}`}
+              />
             </View>
 
-            {/* Botones de redes sociales */}
+            {/* Botones de redes sociales - ACTUALIZADO PARA DARK MODE */}
             <View className="flex-row justify-center space-x-4 mb-8">
-              <View className="w-12 h-12 rounded-full border border-neutral-200 items-center justify-center active:bg-neutral-50">
-                <XIcon size={20} color="#000000" />
+              <View
+                className={`w-12 h-12 rounded-full border items-center justify-center active:bg-neutral-50 ${
+                  theme === 'dark'
+                    ? 'border-neutral-700 active:bg-neutral-800'
+                    : 'border-neutral-200 active:bg-neutral-50'
+                }`}>
+                <XIcon size={20} color={theme === 'dark' ? '#ffffff' : '#000000'} />
               </View>
-              <View className="w-12 h-12 rounded-full border border-neutral-200 items-center justify-center active:bg-neutral-50 mx-2">
+              <View
+                className={`w-12 h-12 rounded-full border items-center justify-center active:bg-neutral-50 mx-2 ${
+                  theme === 'dark'
+                    ? 'border-neutral-700 active:bg-neutral-800'
+                    : 'border-neutral-200 active:bg-neutral-50'
+                }`}>
                 <FacebookIcon size={20} color="#1877F2" />
               </View>
-              <View className="w-12 h-12 rounded-full border border-neutral-200 items-center justify-center active:bg-neutral-50 mx-2">
+              <View
+                className={`w-12 h-12 rounded-full border items-center justify-center active:bg-neutral-50 mx-2 ${
+                  theme === 'dark'
+                    ? 'border-neutral-700 active:bg-neutral-800'
+                    : 'border-neutral-200 active:bg-neutral-50'
+                }`}>
                 <GoogleIcon size={20} color="#DB4437" />
               </View>
-              <View className="w-12 h-12 rounded-full border border-neutral-200 items-center justify-center active:bg-neutral-50">
-                <AppleIcon size={20} color="#000000" />
+              <View
+                className={`w-12 h-12 rounded-full border items-center justify-center active:bg-neutral-50 ${
+                  theme === 'dark'
+                    ? 'border-neutral-700 active:bg-neutral-800'
+                    : 'border-neutral-200 active:bg-neutral-50'
+                }`}>
+                <AppleIcon size={20} color={theme === 'dark' ? '#ffffff' : '#000000'} />
               </View>
             </View>
 
-            {/* Botón de Sign Up */}
+            {/* Botón de Sign Up - ACTUALIZADO PARA DARK MODE */}
             <View className="flex-row justify-center items-center">
-              <Text className="text-neutral-600 text-base">Do not have an account?</Text>
+              <Text
+                className={`text-base ${
+                  theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'
+                }`}>
+                Do not have an account?
+              </Text>
               <MyButton
                 onPress={handleCreateAccount}
                 title="Sign up"
                 variant="text-gray"
-                textClassName="text-primary-800 font-semibold"
+                textClassName={`font-semibold ${
+                  theme === 'dark' ? 'text-primary-400' : 'text-primary-800'
+                }`}
                 size="sm"
               />
             </View>

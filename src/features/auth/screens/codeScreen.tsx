@@ -6,6 +6,7 @@ import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useAuthStore } from '../store/useAuth';
 import MyCodeInput from '@/components/ui/myInput/MyCodeInput';
+import { useAppStore } from '@/app/store/useAppStore';
 
 type FormData = {
   code: string;
@@ -18,6 +19,12 @@ export default function CodeScreen() {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: { code: '' },
   });
+  const { theme } = useAppStore();
+
+  const backgroundImage =
+    theme === 'dark'
+      ? require('@/assets/images/GranadaBackground.jpg') // Imagen para dark mode
+      : require('@/assets/images/BeachBackground.jpg'); // Imagen para light mode
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () =>
@@ -97,10 +104,7 @@ export default function CodeScreen() {
   );
 
   return (
-    <ImageBackground
-      source={require('@/assets/images/BeachBackground.jpg')}
-      className="flex-1"
-      resizeMode="cover">
+    <ImageBackground source={backgroundImage} className="flex-1" resizeMode="cover">
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -120,9 +124,14 @@ export default function CodeScreen() {
         )}
 
         <View
-          className={`bg-white w-full rounded-t-[40px] px-8 pt-10 pb-8 ${isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[55%]'}`}>
-          {/* Título */}
-          <Text className="text-3xl font-bold text-center text-neutral-800 mb-8">
+          className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
+            isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
+          } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
+          {/* Título - ACTUALIZADO PARA DARK MODE */}
+          <Text
+            className={`text-3xl font-bold text-center mb-8 ${
+              theme === 'dark' ? 'text-white' : 'text-neutral-800'
+            }`}>
             Enter your verification code
           </Text>
 
