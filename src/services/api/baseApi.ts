@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL:
-    'http://192.168.1.35:3000' /*<- tienes que poner (IPv4 Address) ya que se ejecuta desde un dispositivo externo*/,
+  baseURL: 'https://maire-unnatural-sparkle.ngrok-free.dev/api/v1/',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,4 +1,13 @@
-import { Platform, ScrollView, Text, View, Image, ImageBackground, Keyboard } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  Keyboard,
+  Alert,
+} from 'react-native';
 import MyInput from '@/components/ui/myInput/MyInput';
 import MyButton from '@/components/ui/myButton/MyButton';
 import { useForm } from 'react-hook-form';
@@ -6,11 +15,10 @@ import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useAppStore } from '@/app/store/useAppStore';
+import { useAuthStore } from '../store/useAuth';
+import { api } from '@/services/api/baseApi';
 
 type FormData = {
-  firstname: string;
-  lastname: string;
-  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -19,6 +27,9 @@ type FormData = {
 export default function SignUpStepTwoScreen() {
   const router = useRouter();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // ✅ FALTABA ESTA LÍNEA
+
+  const { signUpData, clearSignUpData } = useAuthStore();
   const { control, handleSubmit, watch, setError, clearErrors } = useForm<FormData>({
     defaultValues: {
       email: '',
@@ -26,14 +37,15 @@ export default function SignUpStepTwoScreen() {
       confirmPassword: '',
     },
   });
+
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
   const { theme } = useAppStore();
 
   const backgroundImage =
     theme === 'dark'
-      ? require('@/assets/images/GranadaBackground.jpg') // Imagen para dark mode
-      : require('@/assets/images/BeachBackground.jpg'); // Imagen para light mode
+      ? require('@/assets/images/GranadaBackground.jpg')
+      : require('@/assets/images/BeachBackground.jpg');
 
   useEffect(() => {
     if (confirmPassword && password !== confirmPassword) {
@@ -95,8 +107,33 @@ export default function SignUpStepTwoScreen() {
     };
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form data:', data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setIsLoading(true);
+
+      // Combina los datos de ambas pantallas
+      const completeUserData = {
+        ...signUpData, // Datos de la primera pantalla
+        userMail: data.email,
+        userPassword: data.password,
+      };
+
+      console.log('Datos completos para enviar a la API:', completeUserData);
+
+      // Aquí haces la llamada a tu API
+      const response = await api.post('/users/create', completeUserData);
+      console.log('Registro exitoso:', response.data);
+
+      clearSignUpData();
+
+      // Navega a la siguiente pantalla
+      router.push('/codeSend');
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      Alert.alert('Error', 'No se pudo completar el registro. Intenta nuevamente.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -121,14 +158,22 @@ export default function SignUpStepTwoScreen() {
           className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
             isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
           } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
-          {/* Título - ACTUALIZADO PARA DARK MODE */}
+          {/* Título */}
           <Text
             className={`text-3xl font-bold text-center mb-8 ${
               theme === 'dark' ? 'text-white' : 'text-neutral-800'
             }`}>
-            {' '}
-            Create Account
+            Complete Your Registration
           </Text>
+
+          {/* Muestra los datos de la primera pantalla (opcional) */}
+          {signUpData && (
+            <View className="mb-4 p-3 bg-primary-50 rounded-lg">
+              <Text className="text-primary-800 text-sm">
+                Personal info: {signUpData.firstName} {signUpData.lastName} (@{signUpData.username})
+              </Text>
+            </View>
+          )}
 
           {/* Formulario de registro */}
           <View className="space-y-4">
@@ -161,17 +206,16 @@ export default function SignUpStepTwoScreen() {
             />
           </View>
 
-          {/* Botón de Sign Up */}
+          {/* Botón de Sign Up - CORREGIDO */}
           <MyButton
-            onPress={handleSubmit((data) => {
-              onSubmit(data);
-              router.push('/codeSend');
-            })}
-            title="Sign Up"
+            onPress={handleSubmit(onSubmit)} // ✅ Solo pasa la referencia, no la ejecución
+            title={isLoading ? 'Creating Account...' : 'Sign Up'}
             variant="primary"
             size="md"
             className="my-6"
             accessibilityLabel="Sign Up"
+            disabled={isLoading}
+            loading={isLoading}
           />
 
           {/* Botón para ir a Login */}
@@ -191,3 +235,8 @@ export default function SignUpStepTwoScreen() {
     </ImageBackground>
   );
 }
+
+// ❌ ELIMINA ESTA FUNCIÓN - Ya no es necesaria
+// function setIsLoading(arg0: boolean) {
+//   throw new Error('Function not implemented.');
+// }

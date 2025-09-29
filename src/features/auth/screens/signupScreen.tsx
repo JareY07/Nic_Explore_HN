@@ -10,19 +10,19 @@ import { AppleIcon, FacebookIcon, GoogleIcon, XIcon } from '@/components/icons/i
 import { useAppStore } from '@/app/store/useAppStore';
 
 type FormData = {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   username: string;
 };
 
 export default function SignUpScreen() {
   const router = useRouter();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const { setAuthFlow } = useAuthStore();
+  const { setAuthFlow, setSignUpData } = useAuthStore();
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       username: '',
     },
   });
@@ -73,13 +73,15 @@ export default function SignUpScreen() {
   }, []);
 
   const handleSignUp = (data: FormData) => {
-    onSubmit(data);
+    // Guarda los datos en el store ANTES de navegar
+    setSignUpData({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      username: data.username,
+    });
+
     setAuthFlow('createAccount');
     router.push('/signUpStepTwo');
-  };
-
-  const onSubmit = (data: FormData) => {
-    console.log('Form data:', data);
   };
 
   return (
