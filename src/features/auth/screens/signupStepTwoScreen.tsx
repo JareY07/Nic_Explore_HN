@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
+import { useAppStore } from '@/app/store/useAppStore';
 
 type FormData = {
   firstname: string;
@@ -27,6 +28,12 @@ export default function SignUpStepTwoScreen() {
   });
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
+  const { theme } = useAppStore();
+
+  const backgroundImage =
+    theme === 'dark'
+      ? require('@/assets/images/GranadaBackground.jpg') // Imagen para dark mode
+      : require('@/assets/images/BeachBackground.jpg'); // Imagen para light mode
 
   useEffect(() => {
     if (confirmPassword && password !== confirmPassword) {
@@ -93,10 +100,7 @@ export default function SignUpStepTwoScreen() {
   };
 
   return (
-    <ImageBackground
-      source={require('@/assets/images/BeachBackground.jpg')}
-      className="flex-1"
-      resizeMode="cover">
+    <ImageBackground source={backgroundImage} className="flex-1" resizeMode="cover">
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -114,9 +118,15 @@ export default function SignUpStepTwoScreen() {
         />
 
         <View
-          className={`bg-white w-full rounded-t-[40px] px-8 pt-10 pb-8 ${isKeyboardVisible ? 'min-h-[85%]' : 'min-h-[70%]'}`}>
-          {/* Título */}
-          <Text className="text-3xl font-bold text-center text-neutral-800 mb-8">
+          className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
+            isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
+          } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
+          {/* Título - ACTUALIZADO PARA DARK MODE */}
+          <Text
+            className={`text-3xl font-bold text-center mb-8 ${
+              theme === 'dark' ? 'text-white' : 'text-neutral-800'
+            }`}>
+            {' '}
             Create Account
           </Text>
 

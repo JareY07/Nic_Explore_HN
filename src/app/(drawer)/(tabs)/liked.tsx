@@ -1,9 +1,5 @@
-import { View, Text } from 'react-native';
+import LikedScreen from '@/features/home/screens/likedScreen';
 
-export default function MenuScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Menu</Text>
-    </View>
-  );
+export default function liked() {
+  return <LikedScreen />;
 }

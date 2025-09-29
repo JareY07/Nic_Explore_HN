@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dark {
+    color-scheme: dark;
+}
+
+/* Opcional: Estilos base para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .dark {
+        color-scheme: dark;
+    }
+}

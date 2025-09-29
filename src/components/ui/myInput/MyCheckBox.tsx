@@ -1,5 +1,7 @@
+// components/ui/myInput/MyCheckBox.tsx
 import React from 'react';
 import { Pressable, View, Text } from 'react-native';
+import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
 
 export interface CheckboxProps {
   checked: boolean;
@@ -24,6 +26,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
   labelClassName = '',
   accessibilityLabel,
 }) => {
+  const { theme } = useAppStore(); // Obtener el tema actual
+
   const getSizeStyles = () => {
     switch (size) {
       case 'sm':
@@ -38,7 +42,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   const getVariantStyles = () => {
     if (disabled) {
-      return 'bg-neutral-100 border-neutral-300';
+      return theme === 'dark'
+        ? 'bg-neutral-700 border-neutral-600'
+        : 'bg-neutral-100 border-neutral-300';
     }
 
     if (checked) {
@@ -47,7 +53,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
         : 'bg-primary-500 border-primary-500';
     }
 
-    return 'bg-white border-neutral-300';
+    return theme === 'dark' ? 'bg-neutral-800 border-neutral-600' : 'bg-white border-neutral-300';
+  };
+
+  const getLabelColor = () => {
+    if (disabled) {
+      return theme === 'dark' ? 'text-neutral-500' : 'text-neutral-400';
+    }
+    return theme === 'dark' ? 'text-neutral-200' : 'text-neutral-700';
+  };
+
+  const getActiveStyle = () => {
+    return theme === 'dark' ? 'active:bg-neutral-700' : 'active:bg-neutral-50';
   };
 
   return (
@@ -65,7 +82,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           ${getVariantStyles()}
           border-2 rounded-md
           justify-center items-center
-          ${!disabled && 'active:opacity-80'}
+          ${!disabled && getActiveStyle()}
         `}>
         {/* Checkmark usando texto ✓ */}
         {checked && (
@@ -86,7 +103,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           className={`
             ml-3 flex-1
             ${size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-lg' : 'text-base'}
-            ${disabled ? 'text-neutral-400' : 'text-neutral-700'}
+            ${getLabelColor()}
             ${labelClassName}
           `}>
           {label}

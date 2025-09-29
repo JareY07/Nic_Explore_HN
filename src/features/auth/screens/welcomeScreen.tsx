@@ -3,10 +3,17 @@ import MyButton from '@/components/ui/myButton/MyButton';
 import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import { useAuthStore } from '../store/useAuth';
+import { useAppStore } from '@/app/store/useAppStore';
 
 export default function WelcomeScreen() {
   const router = useRouter();
   const { setAuthFlow, resetAuthFlow } = useAuthStore();
+  const { theme } = useAppStore();
+
+  const backgroundImage =
+    theme === 'dark'
+      ? require('@/assets/images/GranadaBackground.jpg') // Imagen para dark mode
+      : require('@/assets/images/BeachBackground.jpg'); // Imagen para light mode
 
   const handleLogin = () => {
     resetAuthFlow();
@@ -18,11 +25,9 @@ export default function WelcomeScreen() {
     setAuthFlow('createAccount');
     router.push('/signUp');
   };
+
   return (
-    <ImageBackground
-      source={require('@/assets/images/BeachBackground.jpg')}
-      className="flex-1"
-      resizeMode="cover">
+    <ImageBackground className="h-full" source={backgroundImage}>
       <View>
         <Image
           resizeMode="contain"

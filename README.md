@@ -40,19 +40,19 @@ bash
 
 # Clonar el repositorio
 
-git clone https://github.com/tu-usuario/nic-explore-frontend.git
+    git clone https://github.com/tu-usuario/nic-explore-frontend.git
 
 # Entrar al directorio
 
-cd nic-explore-frontend
+    cd nic-explore-frontend
 
 # Instalar dependencias
 
-npm install
+    npm install
 
 # Iniciar la aplicación
 
-npx expo start
+    npx expo start
 
 📱 Ejecución
 
@@ -65,19 +65,18 @@ Después de ejecutar npx expo start:
     Web: Presiona w para abrir en el navegador
 
 🏗️ Estructura del Proyecto
-text
 
-src/
-├── app/ # Configuración principal de la app y enrutado
-├── assets/ # Recursos (imágenes, fuentes, íconos)
-├── components/ # Componentes reutilizables
-├── features/ # Funcionalidades específicas (módulos)
-├── providers/ # Proveedores de contexto/estado global
-├── services/ # Conexión con APIs y servicios externos
-├── test/ # Configuración y archivos de testing
-├── theme/ # Configuración de temas y estilos
-├── types/ # Definiciones TypeScript
-└── utils/ # Funciones auxiliares y helpers
+    src/
+    ├── app/ # Configuración principal de la app y enrutado
+    ├── assets/ # Recursos (imágenes, fuentes, íconos)
+    ├── components/ # Componentes reutilizables
+    ├── features/ # Funcionalidades específicas (módulos)
+    ├── providers/ # Proveedores de contexto/estado global
+    ├── services/ # Conexión con APIs y servicios externos
+    ├── test/ # Configuración y archivos de testing
+    ├── theme/ # Configuración de temas y estilos
+    ├── types/ # Definiciones TypeScript
+    └── utils/ # Funciones auxiliares y helpers
 
 🔧 Configuración
 

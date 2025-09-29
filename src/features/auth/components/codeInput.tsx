@@ -3,22 +3,21 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, TextInput, Pressable, Text } from 'react-native';
 import { CodeInputProps } from '@/types/InputProps';
 import { colors } from '@/theme/colors';
-import useInputAnimation from '@/components/hooks/useInputAnimation'; // Importar el hook
+import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
 
 const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onBlur, error, label }) => {
   const inputRef = useRef<TextInput>(null);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
-  // Usar el hook de animación para el contenedor principal
-  const { getBorderClass, handleFocus, handleBlur, isFocused } = useInputAnimation();
+  const [isContainerFocused, setIsContainerFocused] = useState(false);
+  const { theme } = useAppStore(); // Obtener el tema actual
 
   const digits = value.split('').concat(Array(6 - value.length).fill(''));
 
   const focusInput = useCallback(() => {
     inputRef.current?.focus();
     setFocusedIndex(value.length < 6 ? value.length : 5);
-    handleFocus(); // Llamar al handleFocus del hook
-  }, [value.length, handleFocus]);
+    setIsContainerFocused(true);
+  }, [value.length]);
 
   const handleTextChange = useCallback(
     (text: string) => {
@@ -43,36 +42,60 @@ const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onBlur, error, l
     [value, onChange],
   );
 
-  const handleBlurWithAnimation = useCallback(() => {
-    handleBlur(); // Llamar al handleBlur del hook
+  const handleBlur = useCallback(() => {
     onBlur();
     setFocusedIndex(null);
-  }, [handleBlur, onBlur]);
+    setIsContainerFocused(false);
+  }, [onBlur]);
+
+  // Funciones para determinar colores basados en el tema
+  const getContainerBorderColor = () => {
+    if (error) return 'border-status-error';
+    if (isContainerFocused) {
+      return theme === 'dark' ? 'border-primary-400' : 'border-primary-300';
+    }
+    return theme === 'dark' ? 'border-neutral-700' : 'border-neutral-200';
+  };
+
+  const getContainerBackgroundColor = () => {
+    return theme === 'dark' ? 'bg-neutral-800' : 'bg-white';
+  };
+
+  const getDigitBorderColor = (index: number) => {
+    if (error) return 'border-status-error';
+    if (focusedIndex === index) {
+      return theme === 'dark'
+        ? 'border-primary-400 bg-primary-900'
+        : 'border-primary-300 bg-primary-50';
+    }
+    return theme === 'dark' ? 'border-neutral-600' : 'border-neutral-200';
+  };
+
+  const getDigitTextColor = () => {
+    return theme === 'dark' ? 'text-white' : 'text-neutral-800';
+  };
+
+  const getLabelColor = () => {
+    return theme === 'dark' ? 'text-neutral-200' : 'text-neutral-700';
+  };
 
   return (
     <View className="mb-4">
-      {label && <Text className="text-sm font-semibold mb-2 ml-1 text-neutral-700">{label}</Text>}
+      {label && (
+        <Text className={`text-sm font-semibold mb-2 ml-1 ${getLabelColor()}`}>{label}</Text>
+      )}
 
       <Pressable
         onPress={focusInput}
-        className={`
-          mb-1 p-3 rounded-2xl border-2 bg-white
-          ${getBorderClass(error)} // Usar la función del hook
-        `}>
+        className={`mb-1 p-3 rounded-2xl border-2 ${getContainerBorderColor()} ${getContainerBackgroundColor()} ${
+          isContainerFocused ? 'shadow-lg' : 'shadow-sm'
+        }`}>
         <View className="flex-row justify-between">
           {digits.map((digit, index) => (
             <View
               key={index}
-              className={`
-                w-12 h-14 rounded-[10px] border-2 justify-center items-center mx-1
-                ${
-                  focusedIndex === index
-                    ? 'border-primary-300 bg-primary-50' // Verde claro para dígito activo
-                    : 'border-neutral-200'
-                }
-                ${error ? 'border-status-error' : ''}
-              `}>
-              <Text className="text-xl font-bold text-neutral-800">{digit}</Text>
+              className={`w-12 h-14 rounded-[10px] border-2 justify-center items-center mx-1 ${getDigitBorderColor(index)}`}>
+              <Text className={`text-xl font-bold ${getDigitTextColor()}`}>{digit}</Text>
             </View>
           ))}
         </View>
@@ -82,7 +105,7 @@ const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onBlur, error, l
         ref={inputRef}
         value={value}
         onChangeText={handleTextChange}
-        onBlur={handleBlurWithAnimation}
+        onBlur={handleBlur}
         onFocus={focusInput}
         onKeyPress={handleKeyPress}
         keyboardType="number-pad"
@@ -91,7 +114,7 @@ const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onBlur, error, l
         accessibilityLabel={label}
         accessibilityHint={`Ingresa el código de verificación de 6 dígitos`}
         autoFocus={true}
-        selectionColor={colors.primary[300]}
+        selectionColor={theme === 'dark' ? colors.primary[400] : colors.primary[300]}
       />
 
       {error && <Text className="text-status-error text-sm mt-1 ml-1">{error.message}</Text>}

@@ -11,8 +11,8 @@ export const HomeIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="home" size={size} color={color} />
 );
 
-export const BookIcon = ({ color, size = 24 }: IconProps) => (
-  <Feather name="book-open" size={size} color={color} />
+export const LikedIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="heart" size={size} color={color} />
 );
 
 export const OrderIcon = ({ color, size = 24 }: IconProps) => (
@@ -54,6 +54,7 @@ export const SettingsIcon = ({ color, size = 24 }: IconProps) => (
 export const LockIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="lock" size={size} color={color} />
 );
+
 export const CreditCardIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="credit-card" size={size} color={color} />
 );
@@ -65,11 +66,29 @@ export const BellIcon = ({ color, size = 24 }: IconProps) => (
 export const GlobeIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="globe" size={size} color={color} />
 );
+
 export const MoonIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="moon" size={size} color={color} />
 );
+
 export const HelpIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="help-circle" size={size} color={color} />
+);
+
+export const AddIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="plus" size={size} color={color} />
+);
+
+export const ChevronDownIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="chevron-down" size={size} color={color} />
+);
+
+export const ChevronUpIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="chevron-up" size={size} color={color} />
+);
+
+export const CheckIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="check-circle" size={size} color={color} />
 );
 
 export const XIcon = ({ color, size = 32 }: IconProps) => (
