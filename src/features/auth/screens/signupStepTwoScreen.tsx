@@ -222,11 +222,10 @@ export default function SignUpStepTwoScreen() {
             <Text className="text-neutral-600 text-base">Already have an account?</Text>
             <MyButton
               onPress={() => router.push('/login')}
-              title="Sign In"
-              variant="text"
+              title="Sign in"
+              variant="text-gray"
+              textClassName="text-primary-600 font-semibold"
               size="sm"
-              className="p-0 ml-1"
-              textClassName="text-primary-800 font-semibold"
             />
           </View>
         </View>

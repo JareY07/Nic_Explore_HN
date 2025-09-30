@@ -185,7 +185,7 @@ export default function SignUpScreen() {
               onPress={() => router.push('/login')}
               title="Sign in"
               variant="text-gray"
-              textClassName="text-primary-800 font-semibold"
+              textClassName="text-primary-600 font-semibold"
               size="sm"
             />
           </View>

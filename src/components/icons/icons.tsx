@@ -16,6 +16,10 @@ export const LikedIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="heart" size={size} color={color} />
 );
 
+export const TrashIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="trash" size={size} color={color} />
+);
+
 export const HeartFilledIcon = ({ color, size = 24 }: IconProps) => (
   <FontAwesome name="heart" size={size} color={color} />
 );
@@ -24,7 +28,7 @@ export const HeartEmptyIcon = ({ color, size = 24 }: IconProps) => (
   <FontAwesome name="heart-o" size={size} color={color} />
 );
 
-export const OrderIcon = ({ color, size = 24 }: IconProps) => (
+export const EditIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="edit" size={size} color={color} />
 );
 
@@ -90,6 +94,10 @@ export const AddIcon = ({ color, size = 24 }: IconProps) => (
 
 export const ChevronDownIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="chevron-down" size={size} color={color} />
+);
+
+export const ArrowLeftIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="chevron-left" size={size} color={color} />
 );
 
 export const ChevronUpIcon = ({ color, size = 24 }: IconProps) => (
