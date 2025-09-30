@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import {
   HomeIcon,
   LikedIcon,
-  OrderIcon,
+  EditIcon,
   CameraIcon,
   SearchIcon,
   AddIcon,
@@ -127,7 +127,7 @@ export default function TabLayout() {
               className={`items-center justify-center ${
                 focused ? 'flex-row bg-white/30 rounded-[15px] w-[80px] h-[40px]' : ''
               }`}>
-              <OrderIcon color={colors.neutral.white} size={focused ? 24 : 28} />
+              <EditIcon color={colors.neutral.white} size={focused ? 24 : 28} />
               {focused && <Text className="text-white font-medium ml-2 text-sm">Feed</Text>}
             </View>
           ),

@@ -5,14 +5,14 @@ export interface UserState {
   authFlow: AuthFlow;
   tempEmail: string | null;
   signUpData: SignUpData;
-  token: string | null; // ← Nuevo
+  token: string | null;
   user: {
-    // ← Nuevo
     id: string;
     firstName: string;
     lastName: string;
     username: string;
     userMail: string;
+    description: string | null;
   } | null;
   logIn: (authData: AuthResponse) => void;
   logOut: () => void;
@@ -45,5 +45,6 @@ export interface AuthResponse {
     lastName: string;
     username: string;
     userMail: string;
+    description: string | null;
   };
 }

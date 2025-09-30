@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '@/app/store/useAppStore';
-import NavBar from '../components/navBar';
+import NavBar from '../../../components/shared/navBar';
 import LocationCards from '../components/cards';
 import TopLocationCards from '../components/topCards';
 import { Location, TopLocation } from '@/types/locationTypes';
@@ -70,7 +70,7 @@ const HomeScreen: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header Section */}
         <View className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-white'}`}>
-          <NavBar />
+          <NavBar items={['Places', 'Hotels', 'Restaurants', 'Beaches', 'Transport']} />
           <LocationCards locations={locations} loading={loading} onSaveToggle={handleSaveToggle} />
           <TopLocationCards
             locations={mockTopLocations}

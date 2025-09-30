@@ -82,6 +82,7 @@ export default function LoginScreen() {
       });
 
       console.log('✅ Login exitoso:', authResponse);
+      // {"data": {"firstName": "Freddy", "id": 20, "lastName": "Mairena", "userMail": "freddyenmanuelmairenagutierrez@gmail.com", "userPassword": "$2b$08$ej3nBY6oh9BDQPfS0qOMHeiPnI6ug1ZTHmCWzgb32CyEVCLibGWZq", "username": "Freddyenmanuel"}
 
       logIn(authResponse);
 
