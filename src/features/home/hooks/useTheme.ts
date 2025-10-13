@@ -1,5 +1,4 @@
-// hooks/useTheme.js
-import { useAppStore } from '@/app/store/useAppStore'; // Ajusta la ruta
+import { useAppStore } from '@/app/store/useAppStore';
 
 export const useTheme = () => {
   const { theme, toggleTheme, setTheme } = useAppStore();

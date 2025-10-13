@@ -92,12 +92,12 @@ export const AddIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="plus" size={size} color={color} />
 );
 
-export const ChevronDownIcon = ({ color, size = 24 }: IconProps) => (
-  <Feather name="chevron-down" size={size} color={color} />
-);
-
 export const ArrowLeftIcon = ({ color, size = 24 }: IconProps) => (
   <Feather name="chevron-left" size={size} color={color} />
+);
+
+export const ChevronDownIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="chevron-down" size={size} color={color} />
 );
 
 export const ChevronUpIcon = ({ color, size = 24 }: IconProps) => (

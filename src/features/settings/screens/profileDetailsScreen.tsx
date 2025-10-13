@@ -98,7 +98,7 @@ export default function ProfileDetailsScreen() {
           </View>
         </View>
 
-        {/* Información adicional (Bio) - Movida arriba del NavBar */}
+        {/* Información adicional */}
         <View
           className={`mx-6 mt-2 mb-4 p-5 rounded-2xl ${
             isDarkMode ? 'bg-neutral-800' : 'bg-neutral-50'
