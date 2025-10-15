@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function LikedScreen() {
   const { theme } = useAppStore();

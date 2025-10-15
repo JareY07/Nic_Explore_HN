@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 type FormData = {
   password: string;

@@ -2,7 +2,7 @@ import ChangePasswordScreen from '@/features/auth/screens/passwordChangeScreen';
 import { colors } from '@/theme/colors';
 import React from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function ChangePass() {
   const { theme } = useAppStore();

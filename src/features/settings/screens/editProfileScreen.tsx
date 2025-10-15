@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { UserIcon, ArrowLeftIcon } from '@/components/icons/icons';
 import { useAuthStore } from '@/features/auth/store/useAuth';
 import { api } from '@/services/api/baseApi';

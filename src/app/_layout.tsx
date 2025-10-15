@@ -6,7 +6,7 @@ import '../../global.css';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useAuthStore } from '@/features/auth/store/useAuth';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { View } from 'react-native';
 
 export default function RootLayout() {

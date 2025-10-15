@@ -1,7 +1,7 @@
 import { ScrollView, Text, View, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { UserIcon, EditIcon, TrashIcon } from '@/components/icons/icons';
 import NavBar from '@/components/shared/navBar';
 import { useAuthStore } from '@/features/auth/store/useAuth';

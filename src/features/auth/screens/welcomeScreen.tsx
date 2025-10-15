@@ -3,7 +3,7 @@ import MyButton from '@/components/ui/myButton/MyButton';
 import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import { useAuthStore } from '../store/useAuth';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function WelcomeScreen() {
   const router = useRouter();

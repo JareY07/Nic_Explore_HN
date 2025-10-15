@@ -20,7 +20,7 @@ import { View, Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import ToggleSwitch from '@/components/ui/myButton/ToggleSwitch'; // Corregí la ruta
-import { useAppStore } from '@/app/store/useAppStore'; // Corregí la ruta
+import { useAppStore } from '@/store/useAppStore'; // Corregí la ruta
 
 export default function CustomDrawerContent(props: any) {
   const { logOut } = useAuthStore();

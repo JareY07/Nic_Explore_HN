@@ -6,7 +6,7 @@ import '../../../../global.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useAuthStore } from '../store/useAuth';
 import MyCodeInput from '@/components/ui/myInput/MyCodeInput';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 type FormData = {
   code: string;

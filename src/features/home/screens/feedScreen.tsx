@@ -1,7 +1,7 @@
 import { Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function FeedScreen() {
   const { theme } = useAppStore();

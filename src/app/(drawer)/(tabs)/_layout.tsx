@@ -12,7 +12,7 @@ import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Image, Pressable, View, Text } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function TabLayout() {
   const { theme } = useAppStore();

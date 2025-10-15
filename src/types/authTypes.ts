@@ -24,6 +24,10 @@ export interface UserState {
   clearSignUpData: () => void;
 }
 
+export interface AuthProps {
+  children: React.ReactNode;
+}
+
 export interface SignUpData {
   firstName: string;
   lastName: string;

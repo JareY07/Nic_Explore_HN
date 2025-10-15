@@ -1,7 +1,7 @@
 // components/ui/myInput/MyCheckBox.tsx
 import React from 'react';
 import { Pressable, View, Text } from 'react-native';
-import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
+import { useAppStore } from '@/store/useAppStore'; // Importar el store del tema
 
 export interface CheckboxProps {
   checked: boolean;

@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import CodeScreen from '@/features/auth/screens/codeScreen';
 import { colors } from '@/theme/colors';
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function CodeSend() {
   const { theme } = useAppStore();

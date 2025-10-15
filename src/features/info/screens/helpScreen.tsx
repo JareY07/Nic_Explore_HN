@@ -1,7 +1,7 @@
 import { ScrollView, Text, View } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function HelpScreen() {
   const { theme } = useAppStore();

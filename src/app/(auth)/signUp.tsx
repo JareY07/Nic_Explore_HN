@@ -1,7 +1,7 @@
 import SignUpScreen from '@/features/auth/screens/signupScreen';
 import { colors } from '@/theme/colors';
 import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function LoginTest() {
   const { theme } = useAppStore();

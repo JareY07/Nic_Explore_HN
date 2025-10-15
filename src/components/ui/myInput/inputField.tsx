@@ -5,7 +5,7 @@ import { EyeOnIcon, EyeOffIcon } from '@/components/icons/icons';
 import { colors } from '@/theme/colors';
 import CodeInput from '@/features/auth/components/codeInput';
 import { InputFieldProps } from '@/types/InputProps';
-import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
+import { useAppStore } from '@/store/useAppStore'; // Importar el store del tema
 
 const InputField: React.FC<InputFieldProps> = memo(
   ({ value, onChange, onBlur, type, placeholder, trimSpaces, label, error }) => {

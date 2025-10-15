@@ -3,7 +3,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, TextInput, Pressable, Text } from 'react-native';
 import { CodeInputProps } from '@/types/InputProps';
 import { colors } from '@/theme/colors';
-import { useAppStore } from '@/app/store/useAppStore'; // Importar el store del tema
+import { useAppStore } from '@/store/useAppStore'; // Importar el store del tema
 
 const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onBlur, error, label }) => {
   const inputRef = useRef<TextInput>(null);

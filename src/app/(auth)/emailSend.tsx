@@ -1,7 +1,7 @@
 import EmailScreen from '@/features/auth/screens/emailSreen';
 import { colors } from '@/theme/colors';
 import { KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function SendCode() {
   const { theme } = useAppStore();

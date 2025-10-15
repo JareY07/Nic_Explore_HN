@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppStore } from '@/app/store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import NavBar from '../../../components/shared/navBar';
 import LocationCards from '../components/cards';
 import TopLocationCards from '../components/topCards';
