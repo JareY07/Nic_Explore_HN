@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import {
   HomeIcon,
   LikedIcon,
@@ -16,6 +16,7 @@ import { useAppStore } from '@/store/useAppStore';
 
 export default function TabLayout() {
   const { theme } = useAppStore();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -33,7 +34,7 @@ export default function TabLayout() {
             </Pressable>
 
             <Pressable
-              onPress={() => console.log('Opening Camera')}
+              onPress={() => router.push('/features/camera')}
               className="p-2"
               accessibilityLabel="Filter">
               <CameraIcon

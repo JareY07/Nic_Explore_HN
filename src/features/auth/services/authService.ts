@@ -5,13 +5,13 @@ import { AuthResponse, LoginData, SignUpData } from '@/types/authTypes';
 export const authService = {
   // Login
   login: async (credentials: LoginData): Promise<AuthResponse> => {
-    const response = await api.post('/auth', credentials);
+    const response = await api.post('/auth/login', credentials);
     return response.data;
   },
 
   // Signup (ya lo tienes)
   signUp: async (userData: SignUpData): Promise<AuthResponse> => {
-    const response = await api.post('/create', userData);
+    const response = await api.post('/auth/register', userData);
     return response.data;
   },
 };

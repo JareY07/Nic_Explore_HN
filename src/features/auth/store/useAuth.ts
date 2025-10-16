@@ -8,16 +8,16 @@ const initialSignUpData: SignUpData = {
   firstName: '',
   lastName: '',
   username: '',
-  userMail: '',
-  userPassword: '',
+  email: '',
+  password: '',
 };
 
 const mergeSignUpData = (current: SignUpData, update: Partial<SignUpData>): SignUpData => ({
   firstName: update.firstName ?? current.firstName,
   lastName: update.lastName ?? current.lastName,
   username: update.username ?? current.username,
-  userMail: update.userMail ?? current.userMail,
-  userPassword: update.userPassword ?? current.userPassword,
+  email: update.email ?? current.email,
+  password: update.password ?? current.password,
 });
 
 export const useAuthStore = create(
@@ -30,7 +30,6 @@ export const useAuthStore = create(
       token: null,
       user: null,
 
-      // ✅ ACTUALIZADO: Ahora recibe los datos del login
       logIn: (authData: AuthResponse) =>
         set({
           isLoggedIn: true,

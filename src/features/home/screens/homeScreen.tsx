@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 import { useAppStore } from '@/store/useAppStore';
 import NavBar from '../../../components/shared/navBar';
 import LocationCards from '../components/cards';
 import TopLocationCards from '../components/topCards';
 import { Location, TopLocation } from '@/types/locationTypes';
+import HomeLayout from '@/components/shared/layouts/homeLayout';
 
 const HomeScreen: React.FC = () => {
   const { theme } = useAppStore();
@@ -42,7 +42,7 @@ const HomeScreen: React.FC = () => {
           temperature: '28°C',
           description: 'Sunny',
           rating: 4.5,
-          saved: true,
+          saved: false,
           image: 'https://i.pinimg.com/1200x/b6/65/b7/b665b7c017de10634e34cf4b9f455fa3.jpg',
         },
         {
@@ -66,19 +66,17 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView className={`flex-1 ${theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-white'}`}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Header Section */}
-        <View className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-white'}`}>
-          <NavBar items={['Places', 'Hotels', 'Restaurants', 'Beaches', 'Transport']} />
-          <LocationCards locations={locations} loading={loading} onSaveToggle={handleSaveToggle} />
-          <TopLocationCards
-            locations={mockTopLocations}
-            onSaveToggle={(id, saved) => console.log(`Location ${id} saved: ${saved}`)}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <HomeLayout>
+      {/* Header Section */}
+      <View className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-white'}`}>
+        <NavBar items={['Places', 'Hotels', 'Restaurants', 'Beaches', 'Transport']} />
+        <LocationCards locations={locations} loading={loading} onSaveToggle={handleSaveToggle} />
+        <TopLocationCards
+          locations={mockTopLocations}
+          onSaveToggle={(id, saved) => console.log(`Location ${id} saved: ${saved}`)}
+        />
+      </View>
+    </HomeLayout>
   );
 };
 
