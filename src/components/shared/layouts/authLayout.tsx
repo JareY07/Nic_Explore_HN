@@ -1,24 +1,10 @@
-import {
-  ImageBackground,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { AuthProps } from '@/types/authTypes';
 import React, { useEffect, useState } from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { colors } from '@/theme/colors';
 
-export default function ImageLayout({ children }: AuthProps) {
+export default function AuthLayout({ children }: AuthProps) {
   const { theme } = useAppStore();
-
-  const backgroundColor = theme === 'dark' ? colors.neutral[900] : colors.neutral.white;
-  const backgroundImage =
-    theme === 'dark'
-      ? require('@/assets/images/GranadaBackground.jpg')
-      : require('@/assets/images/BeachBackground.jpg');
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -37,25 +23,11 @@ export default function ImageLayout({ children }: AuthProps) {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      style={{ flex: 1, backgroundColor: backgroundColor }}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ImageBackground source={backgroundImage} className="flex-1" resizeMode="cover">
-          <ScrollView
-            contentContainerStyle={{
-              flexGrow: 1,
-              justifyContent: 'flex-end',
-              paddingTop: isKeyboardVisible ? 40 : 0,
-              paddingBottom: Platform.OS === 'ios' ? 20 : 0,
-            }}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}>
-            {children}
-          </ScrollView>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    <View
+      className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
+        isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
+      } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
+      {children}
+    </View>
   );
 }

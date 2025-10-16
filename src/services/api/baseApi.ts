@@ -1,7 +1,9 @@
 import { useAuthStore } from '@/features/auth/store/useAuth';
 import axios from 'axios';
+const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
 export const api = axios.create({
-  baseURL: 'https://maire-unnatural-sparkle.ngrok-free.dev/api/v1/users',
+  baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },

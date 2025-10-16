@@ -123,3 +123,11 @@ export const AppleIcon = ({ color, size = 32 }: IconProps) => (
 export const GoogleIcon = ({ color, size = 32 }: IconProps) => (
   <FontAwesome5 name="google" size={size} color={color} />
 );
+
+export const CameraActionIcon = ({ color, size = 32 }: IconProps) => (
+  <FontAwesome6 name="camera" size={size} color={color} />
+);
+
+export const ToggleCameraIcon = ({ color, size = 32 }: IconProps) => (
+  <FontAwesome6 name="camera-rotate" size={size} color={color} />
+);

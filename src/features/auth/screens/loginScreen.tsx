@@ -1,14 +1,5 @@
 // features/auth/screens/login.tsx
-import {
-  Platform,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  Keyboard,
-  Alert,
-} from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import MyButton from '@/components/ui/myButton/MyButton';
 import MyInput from '@/components/ui/myInput/MyInput';
 import { useForm } from 'react-hook-form';
@@ -16,15 +7,16 @@ import { useRouter } from 'expo-router';
 import '../../../../global.css';
 import { useAuthStore } from '../store/useAuth';
 import Checkbox from '@/components/ui/myInput/MyCheckBox';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { AppleIcon, FacebookIcon, GoogleIcon, XIcon } from '@/components/icons/icons';
 import { useAppStore } from '@/store/useAppStore';
 import { authService } from '../services/authService';
 import { colors } from '@/theme/colors';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
+import AuthLayout from '@/components/shared/layouts/authLayout';
 
 type FormData = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -32,54 +24,40 @@ export default function LoginScreen() {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { setAuthFlow } = useAuthStore();
+
   const { logIn } = useAuthStore();
   const { control, handleSubmit } = useForm<FormData>({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { username: '', password: '' },
   });
   const { theme } = useAppStore();
 
-  const backgroundImage =
-    theme === 'dark'
-      ? require('@/assets/images/GranadaBackground.jpg')
-      : require('@/assets/images/BeachBackground.jpg');
-
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () =>
-      setKeyboardVisible(true),
-    );
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardVisible(false),
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
-  const emailRules = useMemo(
+  const usernameRules = useMemo(
     () => ({
-      required: 'This field is required.',
+      required: 'Username is required',
       pattern: {
-        value: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
-        message: 'Invalid Email Address',
+        value: /^[a-zA-Z0-9_-]+$/,
+        message: 'Username must be coherent',
       },
     }),
     [],
   );
 
+  const forgotPassword = () => {
+    setAuthFlow('forgotPassword');
+    router.push('/emailSend');
+  };
+
   const onSubmit = async (data: FormData) => {
     try {
       setIsLoading(true);
 
-      console.log('🔐 Intentando login con:', { email: data.email });
+      console.log('🔐 Intentando login con:', { email: data.username });
 
       // Llamar al servicio de login
       const authResponse = await authService.login({
-        userMail: data.email,
-        userPassword: data.password,
+        username: data.username,
+        password: data.password,
       });
 
       console.log('✅ Login exitoso:', authResponse);
@@ -90,11 +68,11 @@ export default function LoginScreen() {
       // Navegar al home
       router.replace('/(drawer)');
     } catch (error: any) {
-      console.error('❌ Error en login:', error);
-      console.error({ error });
+      //   console.error('❌ Error en login:', error);
+      //   console.error({ error });
       // Manejo específico de errores
       if (error.response?.status === 401) {
-        Alert.alert('Error', 'Email o contraseña incorrectos');
+        Alert.alert('Error', 'Usuario o contraseña incorrectos');
       } else if (error.response?.status === 404) {
         Alert.alert('Error', 'Usuario no encontrado');
       } else if (error.response?.data?.message) {
@@ -109,17 +87,7 @@ export default function LoginScreen() {
 
   return (
     <ImageLayout>
-      {/* Logo */}
-      <Image
-        resizeMode="contain"
-        className="w-full h-[80px] mt-20 mb-8"
-        source={require('@/assets/images/miniLogo.png')}
-      />
-
-      <View
-        className={`w-full rounded-t-[40px] px-8 pt-10 pb-8 ${
-          isKeyboardVisible ? 'min-h-[100%]' : 'min-h-[70%]'
-        } ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
+      <AuthLayout>
         {/* Título */}
         <Text
           className={`text-3xl font-bold text-center mb-8 ${
@@ -132,11 +100,11 @@ export default function LoginScreen() {
         <View className="mb-6">
           <MyInput
             control={control}
-            name="email"
-            rules={emailRules}
-            type="email"
-            placeholder="your@email.com"
-            label="Email"
+            name="username"
+            rules={usernameRules}
+            type="text"
+            placeholder="myUserName12"
+            label="Username"
             trimSpaces={true}
           />
 
@@ -169,7 +137,7 @@ export default function LoginScreen() {
 
             <View className="flex-shrink-0 ml-4">
               <MyButton
-                onPress={() => router.push('/emailSend')}
+                onPress={forgotPassword}
                 title="Forgot Password?"
                 variant="text-gray"
                 size="sm"
@@ -232,7 +200,7 @@ export default function LoginScreen() {
             size="sm"
           />
         </View>
-      </View>
+      </AuthLayout>
     </ImageLayout>
   );
 }

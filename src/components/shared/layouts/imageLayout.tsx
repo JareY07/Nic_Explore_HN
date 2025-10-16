@@ -5,6 +5,7 @@ import {
   Platform,
   ScrollView,
   TouchableWithoutFeedback,
+  Image,
 } from 'react-native';
 import { AuthProps } from '@/types/authTypes';
 import React, { useEffect, useState } from 'react';
@@ -52,6 +53,12 @@ export default function ImageLayout({ children }: AuthProps) {
             }}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}>
+            {/* Logo */}
+            <Image
+              resizeMode="contain"
+              className="w-full h-[80px] mb-4"
+              source={require('@/assets/images/miniLogo.png')}
+            />
             {children}
           </ScrollView>
         </ImageBackground>

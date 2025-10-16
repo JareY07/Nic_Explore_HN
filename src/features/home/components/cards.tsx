@@ -71,8 +71,8 @@ const LocationCard: React.FC<{
   <View
     className="ml-8 rounded-3xl overflow-hidden"
     style={{
-      width: 220,
-      height: 340,
+      width: 200,
+      height: 300,
     }}>
     {/* ImageBackground como contenedor principal */}
     <ImageBackground

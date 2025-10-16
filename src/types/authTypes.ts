@@ -32,13 +32,13 @@ export interface SignUpData {
   firstName: string;
   lastName: string;
   username: string;
-  userMail: string;
-  userPassword: string;
+  email: string;
+  password: string;
 }
 
 export interface LoginData {
-  userMail: string;
-  userPassword: string;
+  username: string;
+  password: string;
 }
 
 export interface AuthResponse {
