@@ -2,12 +2,11 @@
   "expo": {
     "name": "Nic Explore",
     "slug": "NicExploreFrontend",
-    "scheme": "yourapp",
+    "scheme": "nicexplore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/LogoApp.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./src/assets/images/splash-icon.png",
       "resizeMode": "contain",
@@ -21,7 +20,11 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.jarey17.NicExploreFrontend"
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png",
@@ -37,7 +40,14 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
-      ]
-    ]
+      ],
+      "expo-secure-store"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "80c8927a-222f-4e34-b0c9-74372b18ba7b"
+      }
+    }
   }
 }
