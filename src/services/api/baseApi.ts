@@ -1,8 +1,8 @@
 import { useAuthStore } from '@/features/auth/store/useAuth';
-import axios from 'axios';
+import { create } from 'axios';
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-export const api = axios.create({
+export const api = create({
   baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
