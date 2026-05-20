@@ -2,12 +2,9 @@ import { ScrollView, Text, View } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '@/store/useAppStore';
-import vision from '@google-cloud/vision';
 
 export default function CameraScreen() {
   const { theme } = useAppStore();
-
-  const client = new vision.ImageAnnotatorClient({ keyFilename: 'nic-explore-6d7fee64010f.json' });
   return (
     <SafeAreaView className={`flex-1 ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'}`}>
       <ScrollView contentContainerStyle={{ padding: 20 }} showsVerticalScrollIndicator={false}>
