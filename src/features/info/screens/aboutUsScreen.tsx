@@ -1,30 +1,66 @@
-import { Text, View } from 'react-native';
 import React from 'react';
-import { useAppStore } from '@/store/useAppStore';
-import HomeLayout from '@/components/shared/layouts/homeLayout';
+import { StyleSheet, View } from 'react-native';
+import MyLayout from '@/components/shared/myLayout';
+import { useTheme } from '@/components/hooks/useTheme';
+import { AboutHeroCard } from '@/features/info/components/AboutHeroCard';
+import { PlatformHighlightsSection } from '@/features/info/components/PlatformHighlightsSection';
+import { TeamSection } from '@/features/info/components/TeamSection';
+import {
+  teamMembers,
+  platformHighlights,
+  heroParagraphs,
+  heroMetrics,
+  futureNote,
+} from '@/features/info/utils/aboutUsData';
+import { useNoHeader } from '@/components/hooks/useMyNavigation';
 
 export default function AboutUsScreen() {
-  const { theme } = useAppStore();
-
+  const { theme: appTheme, isDarkMode } = useTheme();
+  const surface = isDarkMode ? appTheme.colors.neutral[800] : appTheme.colors.neutral[50];
+  const cardBackground = isDarkMode ? appTheme.colors.neutral[800] : appTheme.colors.neutral.white;
+  const borderColor = isDarkMode ? appTheme.colors.neutral[700] : appTheme.colors.neutral[200];
+  const textColor = isDarkMode ? appTheme.colors.neutral.white : appTheme.colors.neutral[900];
+  const accent = appTheme.brand.primary;
+  useNoHeader();
   return (
-    <HomeLayout>
-      <View className="mb-6">
-        <Text
-          className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-neutral-800'}`}>
-          Prueba de Funcionamiento liked
-        </Text>
-        {/* Puedes añadir más contenido aquí */}
-        <Text className={`mt-2 ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
-          Esta es la pantalla de elementos que te gustan
-        </Text>
+    <MyLayout>
+      <View style={styles.container}>
+        <AboutHeroCard
+          accent={accent}
+          cardBackground={cardBackground}
+          borderColor={borderColor}
+          textColor={textColor}
+          paragraphs={heroParagraphs}
+          metrics={heroMetrics}
+          style={styles.sectionSpacing}
+        />
+        <PlatformHighlightsSection
+          surfaceColor={surface}
+          cardBackground={cardBackground}
+          borderColor={borderColor}
+          textColor={textColor}
+          highlights={platformHighlights}
+          futureNote={futureNote}
+          style={styles.sectionSpacing}
+        />
+        <TeamSection
+          accent={accent}
+          cardBackground={cardBackground}
+          borderColor={borderColor}
+          textColor={textColor}
+          members={teamMembers}
+        />
       </View>
-
-      {/* Aquí puedes añadir más contenido de la pantalla Liked */}
-      <View className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-neutral-800' : 'bg-neutral-50'}`}>
-        <Text className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-neutral-700'}`}>
-          Tus elementos guardados aparecerán aquí
-        </Text>
-      </View>
-    </HomeLayout>
+    </MyLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  sectionSpacing: {
+    marginBottom: 32,
+  },
+});

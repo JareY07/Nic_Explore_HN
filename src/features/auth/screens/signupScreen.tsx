@@ -10,6 +10,7 @@ import { AppleIcon, FacebookIcon, GoogleIcon, XIcon } from '@/components/icons/i
 import { useAppStore } from '@/store/useAppStore';
 import AuthLayout from '@/components/shared/layouts/authLayout';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
+import { APP_STRINGS } from '@/constants/shared';
 
 type FormData = {
   firstName: string;
@@ -74,7 +75,7 @@ export default function SignUpScreen() {
           className={`text-3xl font-bold text-center mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-neutral-800'
           }`}>
-          Create Account
+          {APP_STRINGS.AUTH.SIGNUP_TITLE}
         </Text>
 
         {/* Formulario de registro */}
@@ -84,8 +85,8 @@ export default function SignUpScreen() {
             name="firstName"
             rules={firstNameRules}
             type="text"
-            placeholder="Your first name"
-            label="First Name"
+            placeholder={APP_STRINGS.AUTH.FIRST_NAME_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.FIRST_NAME_LABEL}
             trimSpaces={true}
           />
 
@@ -94,8 +95,8 @@ export default function SignUpScreen() {
             name="lastName"
             rules={lastNameRules}
             type="text"
-            placeholder="Your last name"
-            label="Last Name"
+            placeholder={APP_STRINGS.AUTH.LAST_NAME_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.LAST_NAME_LABEL}
             trimSpaces={true}
           />
 
@@ -104,8 +105,8 @@ export default function SignUpScreen() {
             name="username"
             rules={usernameRules}
             type="text"
-            placeholder="Your username"
-            label="Username"
+            placeholder={APP_STRINGS.AUTH.USERNAME_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.USERNAME_LABEL}
             trimSpaces={true}
           />
         </View>
@@ -113,16 +114,18 @@ export default function SignUpScreen() {
         {/* Botón de Sign Up */}
         <MyButton
           onPress={handleSubmit(handleSignUp)}
-          title="Next"
+          title={APP_STRINGS.AUTH.NEXT}
           variant="primary"
           size="md"
           className="my-6"
-          accessibilityLabel="Sign Up"
+          accessibilityLabel={APP_STRINGS.AUTH.SIGNUP_BTN}
         />
         {/* Separador con texto "sign in with" */}
         <View className="flex-row items-center justify-center mb-6">
           <View className="flex-1 h-px bg-neutral-200" />
-          <Text className="mx-4 text-neutral-500 text-sm font-medium">or sign up with</Text>
+          <Text className="mx-4 text-neutral-500 text-sm font-medium">
+            {APP_STRINGS.AUTH.OR_WITH}
+          </Text>
           <View className="flex-1 h-px bg-neutral-200" />
         </View>
 
@@ -143,10 +146,12 @@ export default function SignUpScreen() {
         </View>
         {/* Botón para ir a Login */}
         <View className="flex-row justify-center items-center">
-          <Text className="text-neutral-600 text-base">Already have an account?</Text>
+          <Text className="text-neutral-600 text-base">
+            {APP_STRINGS.AUTH.ALREADY_HAVE_ACCOUNT}
+          </Text>
           <MyButton
             onPress={() => router.push('/login')}
-            title="Sign in"
+            title={APP_STRINGS.AUTH.LOGIN_LINK}
             variant="text-gray"
             textClassName="text-primary-600 font-semibold"
             size="sm"

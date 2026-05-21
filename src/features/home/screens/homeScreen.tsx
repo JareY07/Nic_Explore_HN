@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useAppStore } from '@/store/useAppStore';
 import NavBar from '../../../components/shared/navBar';
 import LocationCards from '../components/cards';
 import TopLocationCards from '../components/topCards';
 import { Location, TopLocation } from '@/types/locationTypes';
 import HomeLayout from '@/components/shared/layouts/homeLayout';
+import { useTranslation } from 'react-i18next';
+import { APP_STRINGS } from '@/constants/shared';
 
 const HomeScreen: React.FC = () => {
   const { theme } = useAppStore();
   const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const { t } = useTranslation();
   const mockTopLocations: TopLocation[] = [
     {
       id: 1,
@@ -69,7 +71,20 @@ const HomeScreen: React.FC = () => {
     <HomeLayout>
       {/* Header Section */}
       <View className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-neutral-white'}`}>
-        <NavBar items={['Places', 'Hotels', 'Restaurants', 'Beaches', 'Transport']} />
+        <Text className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+          {t('home.title')}
+        </Text>
+      </View>
+      <View className="flex-1">
+        <NavBar
+          items={[
+            APP_STRINGS.HOME.NAV.PLACES,
+            APP_STRINGS.HOME.NAV.HOTELS,
+            APP_STRINGS.HOME.NAV.RESTAURANTS,
+            APP_STRINGS.HOME.NAV.BEACHES,
+            APP_STRINGS.HOME.NAV.TRANSPORTS,
+          ]}
+        />
         <LocationCards locations={locations} loading={loading} onSaveToggle={handleSaveToggle} />
         <TopLocationCards
           locations={mockTopLocations}

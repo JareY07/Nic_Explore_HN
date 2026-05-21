@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, ActivityIndicator, ViewStyle, View } from 'react-native';
+import { Animated, Pressable, Text, ActivityIndicator, View } from 'react-native';
 import { colors } from '@/theme/colors';
 import { ButtonProps } from '@/types/buttonProps';
 
@@ -15,47 +15,44 @@ const MyButton: React.FC<ButtonProps> = ({
   textClassName = '',
   icon,
 }) => {
-  // Estilos base
-  const baseStyle: ViewStyle = {
-    opacity: disabled ? 0.6 : 1,
-  };
+  const pressAnimation = React.useRef(new Animated.Value(0)).current;
 
   const getVariantStyle = (): string => {
     switch (variant) {
       case 'primary':
-        return 'bg-primary-800'; // Cambiado a verde oscuro (#04423D)
+        return 'bg-primary-700';
       case 'secondary':
         return 'bg-primary-500'; // Verde principal (#367356)
       case 'outline':
-        return 'bg-transparent border-2 border-primary-800';
+        return 'bg-white/80 border border-primary-200';
       case 'text':
         return 'bg-transparent';
       case 'text-gray':
         return 'bg-transparent';
       case 'glass':
-        return 'bg-white/15 border border-white/25';
+        return 'bg-white/18 border border-white/30';
       default:
-        return 'bg-primary-800';
+        return 'bg-primary-700';
     }
   };
 
   const getSizeStyle = (): string => {
     switch (size) {
       case 'sm':
-        return 'py-2.5 px-5 rounded-xl';
+        return 'py-2.5 px-5 rounded-2xl';
       case 'md':
-        return 'py-3.5 px-7 rounded-2xl';
+        return 'py-3.5 px-7 rounded-3xl';
       case 'lg':
-        return 'py-4.5 px-9 rounded-3xl';
+        return 'py-4 px-9 rounded-full';
       default:
-        return 'py-3.5 px-7 rounded-2xl';
+        return 'py-3.5 px-7 rounded-3xl';
     }
   };
 
   const getTextVariantStyle = (): string => {
     switch (variant) {
       case 'primary':
-        return 'text-white font-bold';
+        return 'text-white font-semibold';
       case 'secondary':
         return 'text-white font-semibold';
       case 'outline':
@@ -87,101 +84,99 @@ const MyButton: React.FC<ButtonProps> = ({
   const getGlassEffectStyle = (): string => {
     if (variant === 'glass') {
       return `
-        backdrop-blur-2xl
-        shadow-2xl
-        shadow-black/40
-        elevation-10
+        shadow-lg
+        shadow-black/10
+        elevation-3
       `;
     }
     return '';
   };
 
-  // Efectos de hover/press para cada variante
-  const getPressEffectStyle = (): string => {
-    if (disabled) return '';
+  const handlePressIn = () => {
+    Animated.spring(pressAnimation, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 22,
+      bounciness: 0,
+    }).start();
+  };
 
-    switch (variant) {
-      case 'primary':
-        return 'active:bg-primary-900 active:scale-95';
-      case 'secondary':
-        return 'active:bg-primary-600 active:scale-95';
-      case 'outline':
-        return 'active:bg-primary-50 active:scale-95';
-      case 'text':
-        return 'active:bg-white/10 active:scale-95';
-      case 'text-gray':
-        return 'active:bg-neutral-100 active:scale-95';
-      case 'glass':
-        return 'active:bg-white/20 active:scale-95';
-      default:
-        return 'active:scale-95';
-    }
+  const handlePressOut = () => {
+    Animated.spring(pressAnimation, {
+      toValue: 0,
+      useNativeDriver: true,
+      speed: 22,
+      bounciness: 0,
+    }).start();
+  };
+
+  const animatedStyle = {
+    transform: [
+      {
+        scale: pressAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 0.98],
+        }),
+      },
+      {
+        translateY: pressAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+        }),
+      },
+    ],
   };
 
   return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled || loading}
-      accessibilityLabel={accessibilityLabel || title}
-      className={`
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled || loading}
+        accessibilityLabel={accessibilityLabel || title}
+        style={({ pressed }) => ({
+          opacity: disabled ? 0.55 : pressed ? 0.92 : 1,
+        })}
+        className={`
         flex-row items-center justify-center 
-        transition-all duration-200
         ${getVariantStyle()} 
         ${getSizeStyle()}
         ${getGlassEffectStyle()}
-        ${getPressEffectStyle()}
-        ${disabled ? 'opacity-60' : 'opacity-100'}
+        ${variant === 'outline' ? 'shadow-sm shadow-primary-100' : ''}
         ${className}
-      `}
-      style={[
-        baseStyle,
-        variant === 'glass' && !disabled && !loading
-          ? {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 6 },
-              shadowOpacity: 0.3,
-              shadowRadius: 12,
+      `}>
+        {loading ? (
+          <ActivityIndicator
+            color={
+              variant === 'glass' ||
+              variant === 'text' ||
+              variant === 'primary' ||
+              variant === 'secondary'
+                ? colors.neutral.white
+                : variant === 'text-gray'
+                  ? colors.neutral[400]
+                  : colors.primary[700]
             }
-          : {},
-      ]}>
-      {loading ? (
-        <ActivityIndicator
-          color={
-            variant === 'glass' ||
-            variant === 'text' ||
-            variant === 'primary' ||
-            variant === 'secondary'
-              ? colors.neutral.white
-              : variant === 'text-gray'
-                ? colors.neutral[400]
-                : colors.primary[700]
-          }
-          size="small"
-        />
-      ) : (
-        <>
-          {icon && <View className="mr-2.5">{icon}</View>}
-          <Text
-            className={`
+            size="small"
+          />
+        ) : (
+          <>
+            {icon && <View className="mr-2.5">{icon}</View>}
+            <Text
+              className={`
               text-center
               ${getTextVariantStyle()}
               ${getTextSizeStyle()}
               ${textClassName}
-            `}
-            style={
-              variant === 'glass'
-                ? {
-                    textShadowColor: 'rgba(0, 0, 0, 0.4)',
-                    textShadowOffset: { width: 0, height: 1 },
-                    textShadowRadius: 3,
-                  }
-                : {}
-            }>
-            {title}
-          </Text>
-        </>
-      )}
-    </Pressable>
+              ${variant === 'glass' ? 'text-shadow-sm shadow-black/40' : ''}
+            `}>
+              {title}
+            </Text>
+          </>
+        )}
+      </Pressable>
+    </Animated.View>
   );
 };
 

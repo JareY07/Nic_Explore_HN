@@ -10,6 +10,7 @@ import Checkbox from '@/components/ui/myInput/MyCheckBox';
 import { useState, useMemo } from 'react';
 import { AppleIcon, FacebookIcon, GoogleIcon, XIcon } from '@/components/icons/icons';
 import { useAppStore } from '@/store/useAppStore';
+import { APP_STRINGS } from '@/constants/shared';
 import { authService } from '../services/authService';
 import { colors } from '@/theme/colors';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
@@ -93,7 +94,7 @@ export default function LoginScreen() {
           className={`text-3xl font-bold text-center mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-neutral-800'
           }`}>
-          Welcome Back
+          {APP_STRINGS.AUTH.LOGIN_TITLE}
         </Text>
 
         {/* Formulario */}
@@ -103,8 +104,8 @@ export default function LoginScreen() {
             name="username"
             rules={usernameRules}
             type="text"
-            placeholder="myUserName12"
-            label="Username"
+            placeholder={APP_STRINGS.AUTH.USERNAME_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.USERNAME_LABEL}
             trimSpaces={true}
           />
 
@@ -119,8 +120,8 @@ export default function LoginScreen() {
               },
             }}
             type="password"
-            placeholder="Your password"
-            label="Password"
+            placeholder={APP_STRINGS.AUTH.PASSWORD_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.PASSWORD_LABEL}
           />
 
           {/* Checkbox y Forgot Password en misma línea */}
@@ -129,7 +130,7 @@ export default function LoginScreen() {
               <Checkbox
                 checked={isChecked}
                 onToggle={setIsChecked}
-                label="Remember me"
+                label={APP_STRINGS.AUTH.REMEMBER_ME}
                 variant="primary"
                 size="md"
               />
@@ -138,7 +139,7 @@ export default function LoginScreen() {
             <View className="flex-shrink-0 ml-4">
               <MyButton
                 onPress={forgotPassword}
-                title="Forgot Password?"
+                title={APP_STRINGS.AUTH.FORGOT_PASSWORD}
                 variant="text-gray"
                 size="sm"
                 className="py-1"
@@ -150,11 +151,11 @@ export default function LoginScreen() {
           {/* Botón de Login */}
           <MyButton
             onPress={handleSubmit(onSubmit)}
-            title={isLoading ? 'Signing In...' : 'Sign In'}
+            title={isLoading ? APP_STRINGS.AUTH.SIGNING_IN : APP_STRINGS.AUTH.LOGIN_BTN}
             variant="primary"
             size="md"
             className="mb-6"
-            accessibilityLabel="Sign In"
+            accessibilityLabel={APP_STRINGS.AUTH.LOGIN_BTN}
             disabled={isLoading}
             loading={isLoading}
           />
@@ -163,7 +164,9 @@ export default function LoginScreen() {
         {/* Separador */}
         <View className="flex-row items-center justify-center mb-6">
           <View className="flex-1 h-px bg-neutral-200" />
-          <Text className="mx-4 text-neutral-500 text-sm font-medium">or sign in with</Text>
+          <Text className="mx-4 text-neutral-500 text-sm font-medium">
+            {APP_STRINGS.AUTH.OR_WITH}
+          </Text>
           <View className="flex-1 h-px bg-neutral-200" />
         </View>
 
@@ -191,10 +194,10 @@ export default function LoginScreen() {
 
         {/* Botón de Sign Up */}
         <View className="flex-row justify-center items-center">
-          <Text className="text-neutral-600 text-base">Do not have an account?</Text>
+          <Text className="text-neutral-600 text-base">{APP_STRINGS.AUTH.NO_ACCOUNT}</Text>
           <MyButton
             onPress={() => router.push('/signUp')}
-            title="Sign up"
+            title={APP_STRINGS.AUTH.SIGNUP_LINK}
             variant="text-gray"
             textClassName="text-primary-800 font-semibold"
             size="sm"

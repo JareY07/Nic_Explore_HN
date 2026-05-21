@@ -10,6 +10,7 @@ import { useAuthStore } from '../store/useAuth';
 import { authService } from '../services/authService';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
 import AuthLayout from '@/components/shared/layouts/authLayout';
+import { APP_STRINGS } from '@/constants/shared';
 
 type FormData = {
   email: string;
@@ -116,7 +117,7 @@ export default function SignUpStepTwoScreen() {
           className={`text-3xl font-bold text-center mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-neutral-800'
           }`}>
-          Complete Your Registration
+          {APP_STRINGS.AUTH.COMPLETE_REGISTRATION}
         </Text>
 
         {/* Muestra los datos de la primera pantalla (opcional) */}
@@ -135,8 +136,8 @@ export default function SignUpStepTwoScreen() {
             name="email"
             rules={emailRules}
             type="email"
-            placeholder="your@email.com"
-            label="Email"
+            placeholder={APP_STRINGS.AUTH.EMAIL_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.EMAIL_LABEL}
             trimSpaces={true}
           />
 
@@ -145,8 +146,8 @@ export default function SignUpStepTwoScreen() {
             name="password"
             rules={passwordRules}
             type="password"
-            placeholder="Your password"
-            label="Password"
+            placeholder={APP_STRINGS.AUTH.PASSWORD_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.PASSWORD_LABEL}
           />
 
           <MyInput
@@ -154,29 +155,31 @@ export default function SignUpStepTwoScreen() {
             name="confirmPassword"
             rules={repeatPasswordRules}
             type="password"
-            placeholder="Repeat password"
-            label="Confirm Password"
+            placeholder={APP_STRINGS.AUTH.CONFIRM_PASSWORD_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.CONFIRM_PASSWORD_LABEL}
           />
         </View>
 
         {/* Botón de Sign Up - CORREGIDO */}
         <MyButton
           onPress={handleSubmit(onSubmit)} // ✅ Solo pasa la referencia, no la ejecución
-          title={isLoading ? 'Creating Account...' : 'Sign Up'}
+          title={isLoading ? APP_STRINGS.AUTH.CREATING_ACCOUNT : APP_STRINGS.AUTH.SIGNUP_BTN}
           variant="primary"
           size="md"
           className="my-6"
-          accessibilityLabel="Sign Up"
+          accessibilityLabel={APP_STRINGS.AUTH.SIGNUP_BTN}
           disabled={isLoading}
           loading={isLoading}
         />
 
         {/* Botón para ir a Login */}
         <View className="flex-row justify-center items-center">
-          <Text className="text-neutral-600 text-base">Already have an account?</Text>
+          <Text className="text-neutral-600 text-base">
+            {APP_STRINGS.AUTH.ALREADY_HAVE_ACCOUNT}
+          </Text>
           <MyButton
             onPress={() => router.push('/login')}
-            title="Sign in"
+            title={APP_STRINGS.AUTH.LOGIN_LINK}
             variant="text-gray"
             textClassName="text-primary-600 font-semibold"
             size="sm"

@@ -9,10 +9,11 @@ import {
 } from '@/components/icons/icons';
 import { colors } from '@/theme/colors';
 import { DrawerToggleButton } from '@react-navigation/drawer';
-import { Image, Pressable, View, Text } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAppStore } from '@/store/useAppStore';
+import { APP_STRINGS } from '@/constants/shared';
 
 export default function TabLayout() {
   const { theme } = useAppStore();
@@ -26,7 +27,7 @@ export default function TabLayout() {
             <Pressable
               onPress={() => console.log('Search pressed')}
               className="p-2 mr-2"
-              accessibilityLabel="Search">
+              accessibilityLabel={APP_STRINGS.NAVIGATION.SEARCH}>
               <SearchIcon
                 color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
                 size={24}
@@ -36,7 +37,7 @@ export default function TabLayout() {
             <Pressable
               onPress={() => router.push('/features/camera')}
               className="p-2"
-              accessibilityLabel="Filter">
+              accessibilityLabel={APP_STRINGS.NAVIGATION.FILTER}>
               <CameraIcon
                 color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
                 size={24}
@@ -88,14 +89,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: APP_STRINGS.NAVIGATION.TAB_HOME,
           tabBarIcon: ({ focused }) => (
             <View
               className={`items-center justify-center ${
                 focused ? 'flex-row bg-white/30 rounded-[15px] w-[80px] h-[40px]' : ''
               }`}>
               <HomeIcon color={colors.neutral.white} size={focused ? 24 : 28} />
-              {focused && <Text className="text-white font-medium ml-2 text-sm">Home</Text>}
             </View>
           ),
           tabBarLabel: ({ focused }) => (focused ? null : <View style={{ width: 0, height: 0 }} />),
@@ -105,14 +105,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="liked"
         options={{
-          title: 'Liked',
+          title: APP_STRINGS.FAVORITES.TITLE,
           tabBarIcon: ({ focused }) => (
             <View
               className={`items-center justify-center ${
                 focused ? 'flex-row bg-white/30 rounded-[15px] w-[80px] h-[40px]' : ''
               }`}>
               <LikedIcon color={colors.neutral.white} size={focused ? 24 : 28} />
-              {focused && <Text className="text-white font-medium ml-2 text-sm">Liked</Text>}
             </View>
           ),
           tabBarLabel: ({ focused }) => (focused ? null : <View style={{ width: 0, height: 0 }} />),
@@ -122,14 +121,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="feed"
         options={{
-          title: 'Feed',
+          title: APP_STRINGS.DRAWER.INFO_TITLE,
           tabBarIcon: ({ focused }) => (
             <View
               className={`items-center justify-center ${
                 focused ? 'flex-row bg-white/30 rounded-[15px] w-[80px] h-[40px]' : ''
               }`}>
               <EditIcon color={colors.neutral.white} size={focused ? 24 : 28} />
-              {focused && <Text className="text-white font-medium ml-2 text-sm">Feed</Text>}
             </View>
           ),
           tabBarLabel: ({ focused }) => (focused ? null : <View style={{ width: 0, height: 0 }} />),
@@ -139,14 +137,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="addPost"
         options={{
-          title: 'Add',
+          title: APP_STRINGS.NAVIGATION.TAB_HOME,
           tabBarIcon: ({ focused }) => (
             <View
               className={`items-center justify-center ${
                 focused ? 'flex-row bg-white/30 rounded-[15px] w-[80px] h-[40px]' : ''
               }`}>
               <AddIcon color={colors.neutral.white} size={focused ? 24 : 28} />
-              {focused && <Text className="text-white font-medium ml-2 text-sm">Add</Text>}
             </View>
           ),
           tabBarLabel: ({ focused }) => (focused ? null : <View style={{ width: 0, height: 0 }} />),

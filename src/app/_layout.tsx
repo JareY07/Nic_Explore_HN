@@ -2,12 +2,12 @@
 import 'expo-router/entry';
 import { Stack } from 'expo-router';
 import { Providers } from '@/providers/homeProvider';
-import '../../global.css';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useAuthStore } from '@/features/auth/store/useAuth';
 import { useAppStore } from '@/store/useAppStore';
 import { View } from 'react-native';
+import '../i18n/i18next'; // Asegúrate de importar la configuración de i18n para inicializarla
 
 export default function RootLayout() {
   const { isLoggedIn } = useAuthStore();

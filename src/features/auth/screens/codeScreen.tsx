@@ -9,6 +9,7 @@ import MyCodeInput from '@/components/ui/myInput/MyCodeInput';
 import { useAppStore } from '@/store/useAppStore';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
 import AuthLayout from '@/components/shared/layouts/authLayout';
+import { APP_STRINGS } from '@/constants/shared';
 
 type FormData = {
   code: string;
@@ -93,7 +94,7 @@ export default function CodeScreen() {
           className={`text-3xl font-bold text-center mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-neutral-800'
           }`}>
-          Enter your verification code
+          {APP_STRINGS.AUTH.VERIFY_CODE_HEADING}
         </Text>
 
         {/* Formulario */}
@@ -103,18 +104,18 @@ export default function CodeScreen() {
             name="code"
             rules={codeRules}
             type="code"
-            placeholder="Enter code"
-            label="Verification Code"
+            placeholder={APP_STRINGS.AUTH.CODE_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.CODE_LABEL}
           />
 
           {/* Botón de Send */}
           <MyButton
             onPress={handleFormSubmit}
             variant="primary"
-            title="Verify Code"
+            title={APP_STRINGS.AUTH.VERIFY_CODE_BTN}
             size="md"
             className="my-6"
-            accessibilityLabel="Verify code"
+            accessibilityLabel={APP_STRINGS.AUTH.VERIFY_CODE_BTN}
           />
 
           {/* Botón de Resend Code */}
@@ -123,7 +124,7 @@ export default function CodeScreen() {
               console.log('Resending code...');
               alert('Código reenviado. Revisa tu correo.');
             }}
-            title="Resend Code"
+            title={APP_STRINGS.AUTH.RESEND_CODE}
             variant="outline"
             size="md"
             className="mb-4"
@@ -133,7 +134,7 @@ export default function CodeScreen() {
         {/* Texto de ayuda opcional */}
         <View className="flex-row justify-center items-center mt-4">
           <Text className="text-neutral-600 text-base text-center">
-            Did not receive the code? Check your spam folder or
+            {APP_STRINGS.AUTH.VERIFY_CODE_SUBTITLE}
           </Text>
         </View>
       </AuthLayout>

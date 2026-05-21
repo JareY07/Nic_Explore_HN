@@ -131,3 +131,7 @@ export const CameraActionIcon = ({ color, size = 32 }: IconProps) => (
 export const ToggleCameraIcon = ({ color, size = 32 }: IconProps) => (
   <FontAwesome6 name="camera-rotate" size={size} color={color} />
 );
+
+export const PlusIcon = ({ color, size = 24 }: IconProps) => (
+  <Feather name="plus" size={size} color={color} />
+);
