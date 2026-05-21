@@ -9,6 +9,7 @@ import { useAppStore } from '@/store/useAppStore';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
 import AuthLayout from '@/components/shared/layouts/authLayout';
 import { APP_STRINGS } from '@/constants/shared';
+import i18n from '@/i18n';
 
 type FormData = {
   password: string;
@@ -111,7 +112,7 @@ export default function ChangePasswordScreen() {
         {/* Texto informativo opcional */}
         <View className="flex-row justify-center items-center mt-4">
           <Text className="text-neutral-600 text-base text-center">
-            Make sure your new password is strong and secure
+            {i18n.t('AUTH.CHANGE_PASSWORD_HELP')}
           </Text>
         </View>
       </AuthLayout>

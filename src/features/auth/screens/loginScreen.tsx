@@ -1,5 +1,6 @@
 // features/auth/screens/login.tsx
 import { View, Text, Alert } from 'react-native';
+import i18n from '@/i18n';
 import MyButton from '@/components/ui/myButton/MyButton';
 import MyInput from '@/components/ui/myInput/MyInput';
 import { useForm } from 'react-hook-form';
@@ -73,13 +74,13 @@ export default function LoginScreen() {
       //   console.error({ error });
       // Manejo específico de errores
       if (error.response?.status === 401) {
-        Alert.alert('Error', 'Usuario o contraseña incorrectos');
+        Alert.alert(APP_STRINGS.COMMON.ERROR, i18n.t('ERROR.USER_CREDENTIALS_INVALID'));
       } else if (error.response?.status === 404) {
-        Alert.alert('Error', 'Usuario no encontrado');
+        Alert.alert(APP_STRINGS.COMMON.ERROR, i18n.t('ERROR.USER_NOT_FOUND'));
       } else if (error.response?.data?.message) {
-        Alert.alert('Error', error.response.data.message);
+        Alert.alert(APP_STRINGS.COMMON.ERROR, error.response.data.message);
       } else {
-        Alert.alert('Error', 'No se pudo iniciar sesión. Intenta nuevamente.');
+        Alert.alert(APP_STRINGS.COMMON.ERROR, i18n.t('ERROR.LOGIN_GENERIC'));
       }
     } finally {
       setIsLoading(false);

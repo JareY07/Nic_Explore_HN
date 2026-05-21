@@ -1,9 +1,9 @@
+import { APP_STRINGS } from '../../constants/shared';
+
 const es = {
-  translation: {
-    home: {
-      title: 'Hola Mundo',
-    },
-  },
+  // Reuse APP_STRINGS as the Spanish translation source of truth.
+  // This keeps a single source and avoids duplicating large objects.
+  translation: APP_STRINGS as any,
 };
 
 export default es;

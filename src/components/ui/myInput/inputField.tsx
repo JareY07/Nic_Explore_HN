@@ -1,5 +1,6 @@
 // components/ui/myInput/inputField.tsx
 import { TextInput, Pressable, View, Text } from 'react-native';
+import i18n from '@/i18n';
 import { memo, useState, useCallback } from 'react';
 import { EyeOnIcon, EyeOffIcon } from '@/components/icons/icons';
 import { colors } from '@/theme/colors';
@@ -85,7 +86,7 @@ const InputField: React.FC<InputFieldProps> = memo(
             keyboardType={type === 'email' ? 'email-address' : 'default'}
             className={`flex-1 py-4 px-5 text-base font-medium ${getTextColor()}`}
             accessibilityLabel={label}
-            accessibilityHint={`Ingresa tu ${label?.toLowerCase()}`}
+            accessibilityHint={`${i18n.t('INPUT.ACCESSIBILITY_HINT')} ${label?.toLowerCase()}`}
             autoCapitalize={type === 'email' ? 'none' : 'sentences'}
             blurOnSubmit={false}
             returnKeyType="next"
@@ -95,9 +96,9 @@ const InputField: React.FC<InputFieldProps> = memo(
           {type === 'password' && (
             <Pressable
               onPress={togglePasswordVisibility}
-              accessibilityLabel="Alternar visibilidad de contraseña"
+              accessibilityLabel={i18n.t('INPUT.TOGGLE_PASSWORD')}
               className="pr-4"
-              accessibilityHint="Presiona para mostrar u ocultar la contraseña">
+              accessibilityHint={i18n.t('INPUT.TOGGLE_PASSWORD_HINT')}>
               {passwordVisible ? (
                 <EyeOnIcon
                   color={

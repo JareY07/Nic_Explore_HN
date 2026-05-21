@@ -1,8 +1,6 @@
 const en = {
-  home: {
-    title: 'Hello World',
-  },
+  translation: {},
 };
 
 export default en;
-export type Translations = keyof typeof en;
+export type Translation = typeof en;

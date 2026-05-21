@@ -29,7 +29,7 @@ export default function CustomDrawerContent(props: any) {
 
   // Estado para controlar el submenú de lenguaje
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
 
   // Estado para el dark mode
   const { theme, toggleTheme } = useAppStore();
@@ -185,26 +185,22 @@ export default function CustomDrawerContent(props: any) {
               <View className={`border-t ${getSubmenuBorderColor()} ${getSubmenuBgColor()}`}>
                 {/* Opción English */}
                 <Pressable
-                  onPress={() => handleLanguageSelect('English')}
+                  onPress={() => handleLanguageSelect('en')}
                   className={`flex-row items-center justify-between px-4 py-3 pl-12 ${getActiveBgColor()}`}>
                   <Text className={`font-medium ${getTextColor()}`}>
                     {APP_STRINGS.LANG.ENGLISH}
                   </Text>
-                  {selectedLanguage === 'English' && (
-                    <CheckIcon size={16} color={colors.primary[500]} />
-                  )}
+                  {selectedLanguage === 'en' && <CheckIcon size={16} color={colors.primary[500]} />}
                 </Pressable>
 
                 {/* Opción Español */}
                 <Pressable
-                  onPress={() => handleLanguageSelect('Español')}
+                  onPress={() => handleLanguageSelect('es')}
                   className={`flex-row items-center justify-between px-4 py-3 pl-12 ${getActiveBgColor()}`}>
                   <Text className={`font-medium ${getTextColor()}`}>
                     {APP_STRINGS.LANG.SPANISH}
                   </Text>
-                  {selectedLanguage === 'Español' && (
-                    <CheckIcon size={16} color={colors.primary[500]} />
-                  )}
+                  {selectedLanguage === 'es' && <CheckIcon size={16} color={colors.primary[500]} />}
                 </Pressable>
               </View>
             )}

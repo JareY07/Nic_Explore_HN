@@ -138,7 +138,7 @@ export function useAddPaymentMethod() {
     Alert.alert(
       APP_STRINGS.PAYMENT.ADD_METHOD.SUCCESS_TITLE,
       APP_STRINGS.PAYMENT.ADD_METHOD.SUCCESS_DESC(cardNumber.slice(-4)),
-      [{ text: 'OK', onPress: handleGoBack }],
+      [{ text: APP_STRINGS.COMMON.OK, onPress: handleGoBack }],
     );
   };
 

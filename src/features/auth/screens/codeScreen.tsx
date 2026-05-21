@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native';
+import i18n from '@/i18n';
 import MyButton from '@/components/ui/myButton/MyButton';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'expo-router';
@@ -56,12 +57,12 @@ export default function CodeScreen() {
       } else {
         // Manejar código inválido
         console.log('Código inválido');
-        // Puedes mostrar un alert o manejar el error de otra forma
-        alert('Código inválido. Por favor intenta nuevamente.');
+        // Mostrar mensaje localizado
+        alert(i18n.t('AUTH.CODE_INVALID_MSG'));
       }
     } catch (error) {
       console.error('Error verifying code:', error);
-      alert('Error al verificar el código. Intenta nuevamente.');
+      alert(i18n.t('ERROR.VERIFICATION_FAILED'));
     }
   };
 
@@ -122,7 +123,7 @@ export default function CodeScreen() {
           <MyButton
             onPress={() => {
               console.log('Resending code...');
-              alert('Código reenviado. Revisa tu correo.');
+              alert(i18n.t('AUTH.CODE_RESENT_MSG'));
             }}
             title={APP_STRINGS.AUTH.RESEND_CODE}
             variant="outline"
