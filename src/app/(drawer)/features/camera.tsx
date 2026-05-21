@@ -14,6 +14,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
+import { APP_STRINGS } from '@/constants/shared';
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState<CameraType>('back');
@@ -48,9 +49,9 @@ export default function CameraScreen() {
   if (!permission.granted) {
     return (
       <View style={styles.centeredContainer}>
-        <Text style={styles.message}>Necesitamos permiso para usar la cámara</Text>
+        <Text style={styles.message}>{APP_STRINGS.CAMERA.NEED_PERMISSION}</Text>
         <TouchableOpacity style={styles.grantButton} onPress={requestPermission}>
-          <Text style={styles.grantButtonText}>Conceder permiso</Text>
+          <Text style={styles.grantButtonText}>{APP_STRINGS.CAMERA.GRANT_PERMISSION}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -95,7 +96,7 @@ export default function CameraScreen() {
         {/* Centro donde va el recuadro */}
         <View style={styles.centerContainer}>
           <View style={styles.hintWrapper}>
-            <Text style={styles.hint}>Apunta la cámara al objetivo</Text>
+            <Text style={styles.hint}>{APP_STRINGS.CAMERA.HINT}</Text>
           </View>
 
           <View style={[styles.frameArea, { width: frameSize, height: frameSize }]}>

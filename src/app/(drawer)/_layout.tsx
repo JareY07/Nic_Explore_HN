@@ -4,6 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomDrawerContent from '@/components/ui/myButton/drawerBtn';
 import { colors } from '@/theme/colors';
 import { HomeIcon } from '@/components/icons/icons';
+import { APP_STRINGS } from '@/constants/shared';
 
 export default function drawerLayout() {
   return (
@@ -21,7 +22,7 @@ export default function drawerLayout() {
         <Drawer.Screen
           name="(tabs)"
           options={{
-            title: 'Home',
+            title: APP_STRINGS.NAVIGATION.TAB_HOME,
             headerShown: false,
             drawerIcon: ({ size, color }) => <HomeIcon size={size} color={color} />,
           }}

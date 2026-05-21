@@ -15,6 +15,7 @@ import { useAuthStore } from '@/features/auth/store/useAuth';
 import { api } from '@/services/api/baseApi';
 import MyButton from '@/components/ui/myButton/MyButton';
 import { useRouter } from 'expo-router';
+import { APP_STRINGS } from '@/constants/shared';
 
 export default function EditProfileScreen() {
   const { theme } = useAppStore();
@@ -62,7 +63,7 @@ export default function EditProfileScreen() {
         </Pressable>
 
         <Text className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-neutral-800'}`}>
-          Edit Profile
+          {APP_STRINGS.PROFILE.EDIT}
         </Text>
       </View>
 
@@ -90,7 +91,7 @@ export default function EditProfileScreen() {
                 className={`text-sm font-medium mb-1 ${
                   isDarkMode ? 'text-neutral-300' : 'text-neutral-700'
                 }`}>
-                Name
+                {APP_STRINGS.PROFILE.NAME}
               </Text>
               <TextInput
                 value={name}
@@ -98,7 +99,7 @@ export default function EditProfileScreen() {
                 className={`px-3 py-2 rounded-xl text-base ${
                   isDarkMode ? 'bg-neutral-800 text-white' : 'bg-neutral-100 text-neutral-800'
                 }`}
-                placeholder="Enter your name"
+                placeholder={APP_STRINGS.PROFILE.NAME_PLACEHOLDER || 'Ingrese su nombre'}
                 placeholderTextColor={isDarkMode ? '#6b7280' : '#9ca3af'}
                 returnKeyType="next"
               />
@@ -110,7 +111,7 @@ export default function EditProfileScreen() {
                 className={`text-sm font-medium mb-1 ${
                   isDarkMode ? 'text-neutral-300' : 'text-neutral-700'
                 }`}>
-                Username
+                {APP_STRINGS.PROFILE.USERNAME}
               </Text>
               <TextInput
                 value={username}
@@ -118,7 +119,7 @@ export default function EditProfileScreen() {
                 className={`px-3 py-2 rounded-xl text-base ${
                   isDarkMode ? 'bg-neutral-800 text-white' : 'bg-neutral-100 text-neutral-800'
                 }`}
-                placeholder="Enter your username"
+                placeholder={APP_STRINGS.PROFILE.USERNAME_PLACEHOLDER || 'Tu usuario'}
                 placeholderTextColor={isDarkMode ? '#6b7280' : '#9ca3af'}
                 autoCapitalize="none"
                 returnKeyType="next"
@@ -131,7 +132,7 @@ export default function EditProfileScreen() {
                 className={`text-sm font-medium mb-1 ${
                   isDarkMode ? 'text-neutral-300' : 'text-neutral-700'
                 }`}>
-                Bio
+                {APP_STRINGS.PROFILE.BIO}
               </Text>
               <TextInput
                 value={bio}
@@ -139,7 +140,7 @@ export default function EditProfileScreen() {
                 className={`px-3 py-2 rounded-xl text-base ${
                   isDarkMode ? 'bg-neutral-800 text-white' : 'bg-neutral-100 text-neutral-800'
                 }`}
-                placeholder="Beach seeker, hammock dreamer, and sunset lover..."
+                placeholder={APP_STRINGS.PROFILE.BIO_PLACEHOLDER || ''}
                 placeholderTextColor={isDarkMode ? '#6b7280' : '#9ca3af'}
                 multiline
                 numberOfLines={3}
@@ -148,7 +149,7 @@ export default function EditProfileScreen() {
               />
             </View>
 
-            <MyButton onPress={handleSave} size="sm" title="save" />
+            <MyButton onPress={handleSave} size="sm" title={APP_STRINGS.COMMON.SAVE} />
             <Text className="text-black">{user?.description}</Text>
           </View>
         </ScrollView>

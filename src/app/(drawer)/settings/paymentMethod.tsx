@@ -1,5 +1,5 @@
-import PaymentMethodScreen from '@/features/settings/screens/paymentMethodScreen';
+import PaymentMethodScreen from '@/features/settings/screens/methodsScreen';
 
-export default function OrderScreen() {
+export default function PaymentMethods() {
   return <PaymentMethodScreen />;
 }

@@ -8,6 +8,8 @@ import React, { useEffect, useMemo } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
 import AuthLayout from '@/components/shared/layouts/authLayout';
+import { APP_STRINGS } from '@/constants/shared';
+import i18n from '@/i18n';
 
 type FormData = {
   password: string;
@@ -72,7 +74,7 @@ export default function ChangePasswordScreen() {
           className={`text-3xl font-bold text-center mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-neutral-800'
           }`}>
-          Enter your new password
+          {APP_STRINGS.AUTH.CHANGE_PASSWORD_TITLE}
         </Text>
 
         {/* Formulario */}
@@ -82,8 +84,8 @@ export default function ChangePasswordScreen() {
             name="password"
             rules={passwordRules}
             type="password"
-            placeholder="Your new password"
-            label="New Password"
+            placeholder={APP_STRINGS.AUTH.NEW_PASSWORD_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.NEW_PASSWORD_LABEL}
           />
 
           {/* Campo de confirmación de contraseña */}
@@ -92,25 +94,25 @@ export default function ChangePasswordScreen() {
             name="confirmPassword"
             rules={repeatPasswordRules}
             type="password"
-            placeholder="Confirm your password"
-            label="Confirm Password"
+            placeholder={APP_STRINGS.AUTH.CONFIRM_NEW_PASSWORD_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.CONFIRM_NEW_PASSWORD_LABEL}
           />
 
           {/* Botón para cambiar contraseña */}
           <MyButton
             onPress={handleFormSubmit}
             variant="primary"
-            title="Change Password"
+            title={APP_STRINGS.AUTH.CHANGE_PASSWORD_BTN}
             size="md"
             className="my-6"
-            accessibilityLabel="Change password"
+            accessibilityLabel={APP_STRINGS.AUTH.CHANGE_PASSWORD_BTN}
           />
         </View>
 
         {/* Texto informativo opcional */}
         <View className="flex-row justify-center items-center mt-4">
           <Text className="text-neutral-600 text-base text-center">
-            Make sure your new password is strong and secure
+            {i18n.t('AUTH.CHANGE_PASSWORD_HELP')}
           </Text>
         </View>
       </AuthLayout>

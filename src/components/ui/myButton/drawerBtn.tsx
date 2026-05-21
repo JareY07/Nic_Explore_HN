@@ -21,6 +21,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import ToggleSwitch from '@/components/ui/myButton/ToggleSwitch'; // Corregí la ruta
 import { useAppStore } from '@/store/useAppStore'; // Corregí la ruta
+import { APP_STRINGS } from '@/constants/shared';
 
 export default function CustomDrawerContent(props: any) {
   const { logOut } = useAuthStore();
@@ -28,7 +29,7 @@ export default function CustomDrawerContent(props: any) {
 
   // Estado para controlar el submenú de lenguaje
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
 
   // Estado para el dark mode
   const { theme, toggleTheme } = useAppStore();
@@ -74,11 +75,15 @@ export default function CustomDrawerContent(props: any) {
         className={`p-6 border-b ${theme === 'dark' ? 'border-neutral-700 bg-neutral-800' : 'border-neutral-200 bg-primary-50'}`}>
         <View className="flex-row items-center mb-4">
           <View className="w-12 h-12 bg-primary-500 rounded-full justify-center items-center mr-3">
-            <Text className="text-white font-bold text-lg">U1</Text>
+            <Text className="text-white font-bold text-lg">{APP_STRINGS.DRAWER.DEMO_INITIALS}</Text>
           </View>
           <View>
-            <Text className={`text-lg font-bold ${getTextColor()}`}>User 1</Text>
-            <Text className={`text-sm ${getSecondaryTextColor()}`}>Basic User</Text>
+            <Text className={`text-lg font-bold ${getTextColor()}`}>
+              {APP_STRINGS.DRAWER.DEMO_USER}
+            </Text>
+            <Text className={`text-sm ${getSecondaryTextColor()}`}>
+              {APP_STRINGS.DRAWER.DEMO_ROLE}
+            </Text>
           </View>
         </View>
       </View>
@@ -89,7 +94,7 @@ export default function CustomDrawerContent(props: any) {
           className={`text-sm font-semibold uppercase tracking-wider mb-3 px-2 ${
             theme === 'dark' ? 'text-neutral-400' : 'text-neutral-500'
           }`}>
-          Other Settings
+          {APP_STRINGS.DRAWER.FEATURES_TITLE}
         </Text>
 
         <View
@@ -104,7 +109,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Profile Details</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.PROFILE.TITLE}
+            </Text>
           </Pressable>
 
           {/* Password */}
@@ -115,7 +122,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Password</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.PROFILE.CHANGE_PASSWORD}
+            </Text>
           </Pressable>
 
           {/* Payment method */}
@@ -126,7 +135,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Payment method</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.DRAWER.PAYMENT_METHOD}
+            </Text>
           </Pressable>
 
           {/* Notifications */}
@@ -137,7 +148,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Notifications</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.NOTIFICATIONS.TITLE}
+            </Text>
           </Pressable>
 
           {/* Language - SUBMENÚ */}
@@ -150,7 +163,9 @@ export default function CustomDrawerContent(props: any) {
                   size={20}
                   color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
                 />
-                <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Language</Text>
+                <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+                  {APP_STRINGS.DRAWER.LANGUAGE}
+                </Text>
               </View>
               {languageMenuOpen ? (
                 <ChevronUpIcon
@@ -170,22 +185,22 @@ export default function CustomDrawerContent(props: any) {
               <View className={`border-t ${getSubmenuBorderColor()} ${getSubmenuBgColor()}`}>
                 {/* Opción English */}
                 <Pressable
-                  onPress={() => handleLanguageSelect('English')}
+                  onPress={() => handleLanguageSelect('en')}
                   className={`flex-row items-center justify-between px-4 py-3 pl-12 ${getActiveBgColor()}`}>
-                  <Text className={`font-medium ${getTextColor()}`}>English</Text>
-                  {selectedLanguage === 'English' && (
-                    <CheckIcon size={16} color={colors.primary[500]} />
-                  )}
+                  <Text className={`font-medium ${getTextColor()}`}>
+                    {APP_STRINGS.LANG.ENGLISH}
+                  </Text>
+                  {selectedLanguage === 'en' && <CheckIcon size={16} color={colors.primary[500]} />}
                 </Pressable>
 
                 {/* Opción Español */}
                 <Pressable
-                  onPress={() => handleLanguageSelect('Español')}
+                  onPress={() => handleLanguageSelect('es')}
                   className={`flex-row items-center justify-between px-4 py-3 pl-12 ${getActiveBgColor()}`}>
-                  <Text className={`font-medium ${getTextColor()}`}>Español</Text>
-                  {selectedLanguage === 'Español' && (
-                    <CheckIcon size={16} color={colors.primary[500]} />
-                  )}
+                  <Text className={`font-medium ${getTextColor()}`}>
+                    {APP_STRINGS.LANG.SPANISH}
+                  </Text>
+                  {selectedLanguage === 'es' && <CheckIcon size={16} color={colors.primary[500]} />}
                 </Pressable>
               </View>
             )}
@@ -198,7 +213,9 @@ export default function CustomDrawerContent(props: any) {
                 size={20}
                 color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
               />
-              <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Dark mode</Text>
+              <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+                {APP_STRINGS.DRAWER.DARK_MODE}
+              </Text>
             </View>
             <ToggleSwitch isEnabled={theme === 'dark'} onToggle={handleDarkModeToggle} size="md" />
           </View>
@@ -211,7 +228,7 @@ export default function CustomDrawerContent(props: any) {
           className={`text-sm font-semibold uppercase tracking-wider mb-3 px-2 ${
             theme === 'dark' ? 'text-neutral-400' : 'text-neutral-500'
           }`}>
-          Info
+          {APP_STRINGS.DRAWER.INFO_TITLE}
         </Text>
 
         <View
@@ -226,7 +243,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>About us</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.DRAWER.ABOUT_US}
+            </Text>
           </Pressable>
 
           {/* Help */}
@@ -237,7 +256,9 @@ export default function CustomDrawerContent(props: any) {
               size={20}
               color={theme === 'dark' ? colors.neutral[300] : colors.neutral[400]}
             />
-            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>Help</Text>
+            <Text className={`ml-3 font-medium flex-1 ${getTextColor()}`}>
+              {APP_STRINGS.DRAWER.HELP}
+            </Text>
           </Pressable>
 
           {/* Log out */}
@@ -245,7 +266,9 @@ export default function CustomDrawerContent(props: any) {
             onPress={logOut}
             className={`flex-row items-center px-4 py-3 ${theme === 'dark' ? 'active:bg-red-900/30' : 'active:bg-red-50'}`}>
             <LeaveIcon size={20} color={colors.status.error} />
-            <Text className="ml-3 text-red-600 font-medium flex-1">Log out</Text>
+            <Text className="ml-3 text-red-600 font-medium flex-1">
+              {APP_STRINGS.PROFILE.LOGOUT}
+            </Text>
           </Pressable>
         </View>
       </View>

@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/useAuth';
 import { useAppStore } from '@/store/useAppStore';
 import ImageLayout from '@/components/shared/layouts/imageLayout';
 import AuthLayout from '@/components/shared/layouts/authLayout';
+import { APP_STRINGS } from '@/constants/shared';
 
 type FormData = {
   email: string;
@@ -38,7 +39,10 @@ export default function EmailScreen() {
     [],
   );
 
-  const title = authFlow === 'forgotPassword' ? 'Recover your password' : 'Verify your email';
+  const title =
+    authFlow === 'forgotPassword'
+      ? APP_STRINGS.AUTH.SEND_CODE_TITLE
+      : APP_STRINGS.AUTH.VERIFY_EMAIL_TITLE;
 
   return (
     <ImageLayout>
@@ -57,8 +61,8 @@ export default function EmailScreen() {
             name="email"
             rules={emailRules}
             type="email"
-            placeholder="your@email.com"
-            label="Email"
+            placeholder={APP_STRINGS.AUTH.EMAIL_PLACEHOLDER}
+            label={APP_STRINGS.AUTH.EMAIL_LABEL}
             trimSpaces={true}
           />
 
@@ -68,18 +72,18 @@ export default function EmailScreen() {
               onSubmit(data);
             })}
             variant="primary"
-            title="Send"
+            title={APP_STRINGS.AUTH.SEND_BTN}
             size="md"
             className="my-6"
-            accessibilityLabel="Send email"
+            accessibilityLabel={APP_STRINGS.AUTH.SEND_BTN}
           />
         </View>
         {/* Botón de Back to Log In */}
         <View className="flex-row justify-center items-center">
-          <Text className="text-neutral-600 text-base">Do not have an account?</Text>
+          <Text className="text-neutral-600 text-base">{APP_STRINGS.AUTH.NO_ACCOUNT}</Text>
           <MyButton
             onPress={() => router.push('/login')}
-            title="Sign In"
+            title={APP_STRINGS.AUTH.LOGIN_LINK}
             variant="text-gray"
             textClassName="text-primary-800 font-semibold"
             size="sm"

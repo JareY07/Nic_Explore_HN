@@ -121,7 +121,7 @@ const LocationCard: React.FC<{
 
             {/* Distancia */}
             <Text className={`text-sm mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              {location.distance} from this location
+              A {location.distance} de tu ubicación
             </Text>
           </View>
         </View>
